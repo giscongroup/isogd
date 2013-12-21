@@ -1,0 +1,66 @@
+<div class="auth">
+    <header class="navbar navbar-inverse navbar-fixed-top mainM">
+
+        <!--<div class="navbar-inner" x-ng-show="user.session_id != undefined">-->
+        <!--<ul class="nav pull-right">-->
+        <!--<li><a href="#"><i class="icon-envelope-alt"></i></a></li>-->
+        <!--<li><a href="#"><i class="icon-cog"></i></a></li>-->
+        <!--<li><a href="#"><i class="icon-question"></i></a></li>-->
+        <!--</ul>-->
+        <!--<a href="#" class="brand"><i class="icon-signal"></i> <span>Мониторинг</span> показателей-->
+        <!--эффективности</a>-->
+
+        <!--</div>-->
+
+
+        <div class="navbar-inner ztop">
+
+            <a class="brand center"><i class="icon-signal"></i> <span>Мониторинг</span>
+                показателей эффективности</a>
+
+        </div>
+    </header>
+    <div>
+        <div>
+            <div class="wrap">
+                <h3>Авторизация</h3>
+
+                <form name="form">
+
+
+                    <input required name="email" type="text" x-ng-model="login" placeholder="Имя пользователя"
+                           x-ng-change="invalidAuthorization = ''; invalidConnection=''">
+
+
+                    <input required type="text" x-ng-model="password" placeholder="Пароль"
+                           x-ng-change="invalidAuthorization = ''; invalidConnection=''">
+
+                    <div x-ng-class="invalidAuthorization" class="alcont">
+                        <div class="alert alert-error">
+                            <i class="icon-remove-sign"></i> Неправильный логин или пароль
+                        </div>
+
+                    </div>
+                    <div x-ng-class="invalidConnection" class="alcont">
+                        <div class="alert alert-error">
+                            <i class="icon-remove-sign"></i> Ошибка подключения к базе данных
+                        </div>
+
+                    </div>
+
+                </form>
+                <div class="foot">
+                    <button class="btn-glow" x-ng-click="authorization()" x-ng-disabled = "login == '' || login == undefined || password == '' || password == undefined">Войти</button>
+
+                    <div x-ng-class="process">
+                        <i class="icon-spinner icon-spin"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+

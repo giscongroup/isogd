@@ -1,0 +1,111 @@
+<h3>Общая информация</h3>
+<div class="long2">
+    <form name="form" x-ng-submit="savedata()" class="clearfix">
+        <div class="field-box">
+            <label>Наименование МО</label>
+
+            <div>
+                <input x-ng-model="currentMO.NameMO" type="text">
+            </div>
+        </div>
+        <div class="field-box">
+            <label>Тип МО</label>
+
+            <div>
+                <div class="ui-select">
+                    <select x-ng-model="currentMO.TipMO"
+                            x-ng-options="tip for tip in tipArray"></select>
+                </div>
+            </div>
+        </div>
+        <div class="field-box">
+            <label>Кадастровый номер муниципального образования</label>
+
+            <div>
+                <input x-ng-model="currentMO.CadastrNumber" type="text">
+            </div>
+        </div>
+        <div class="field-box">
+            <label>Официальный сайт<span>муниципального образования в сети Интернет</span></label>
+
+            <div>
+                <input name="Site" x-ng-model="currentMO.Site" type="text" placeholder="www.example.com">
+            </div>
+        </div>
+
+        <div class="field-box">
+            <label>Площадь муниципального образования<span>км²</span></label>
+
+            <div>
+                <input name="MunicipalityArea" x-ng-model="currentMO.MunicipalityArea" type="text"
+                       placeholder="Введите числовое значение"
+                       x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
+            <span class="label1 label-important"
+                  x-ng-hide="form.MunicipalityArea.$valid"><i
+                    class="icon-remove-sign"></i> Введите числовое значение</span></div>
+        </div>
+        <div class="field-box">
+            <label>Численность населения<span>тыс. чел.</span></label>
+
+            <div>
+                <input name="QuantityPopulation" x-ng-model="currentMO.QuantityPopulation" type="text"
+                       placeholder="Введите числовое значение"
+                       x-ng-Pattern="/^[0-9]*$/">
+                <span class="label1 label-important"
+                      x-ng-hide="form.QuantityPopulation.$valid"><i class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+        </div>
+        <div class="field-box">
+            <label>Глава муниципального образования</label>
+
+            <div>
+                <input placeholder="Ф.И.О." x-ng-model="currentMO.HeadMunicipality" type="text">
+            </div>
+        </div>
+        <div class="field-box">
+            <label>Наименование структурного подразделения<span>уполномоченного в области архитектуры и градостроительства</span>
+            </label>
+
+            <div>
+                <input x-ng-model="currentMO.NameStructuralDivision" type="text">
+            </div>
+        </div>
+        <div class="field-box">
+            <label>Руководитель структурного подразделения<span>уполномоченного в области архитектуры и градостроительства</span>
+            </label>
+
+            <div>
+                <input x-ng-model="currentMO.HeadStructuralDivision" type="text" placeholder="Фамилия Имя Отчество">
+            </div>
+        </div>
+        <div class="field-box">
+            <label>Телефон руководителя структурного подразделения<span>уполномоченного в области архитектуры и
+                градостроительства</span>
+            </label>
+
+            <div>
+                <input x-ng-model="currentMO.Telefone" type="text" ui-mask="9(999)999-99-99">
+            </div>
+        </div>
+        <div class="field-box">
+            <label>Адрес электронной почты структурного подразделения<span>уполномоченного в области архитектуры и
+                градостроительства</span>
+            </label>
+
+            <div>
+                <input name="email" x-ng-model="currentMO.Email" type="text"
+                       x-ng-Pattern="/(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})/" placeholder="example@mail.com">
+                <span class="label1 label-important" x-ng-hide="form.email.$valid"><i class="icon-remove-sign"></i> Неправильный формат адреса</span>
+            </div>
+        </div>
+        <input class="btn-flat vert" x-ng-disabled="form.$invalid" type="submit" value="СОХРАНИТЬ"
+               x-ng-hide="form.$invalid">
+
+        <div x-ng-show="saveSuccess" class="alert alert-success woutm">
+            <i class="icon-ok-sign"></i> Данные успешно сохранены
+        </div>
+        <div x-ng-show="saveError" class="alert alert-error woutm">
+            <i class="icon-remove-sign"></i> Ошибка! Данные не сохранены
+        </div>
+    </form>
+</div>

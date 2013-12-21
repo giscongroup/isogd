@@ -1,0 +1,415 @@
+<div class="noprint">
+    <div class="prgwrap" x-ng-show="startGraph">
+        <button class="btn-flat danger" x-ng-click="cancelGraph()"><i class="icon-remove"></i> Отменить</button>
+        <div class="progress progress-striped active">
+            <div class="bar" style="width: {{currentIndex*100/graphCount}}%;"></div>
+            <label>{{currentIndex}}/{{graphCount}}</label>
+        </div>
+    </div>
+
+    <h3>Суммарные показатели</h3>
+
+    <div class="rbox">
+        <input type="radio" name="mos" id="mos1" x-ng-model="reportParam.by" value="all">
+        <label for="mos1">
+            <span><i class="icon-circle"></i></span> Для всех муниципальных районов и городских округов
+        </label>
+    </div>
+    <div class="rbox">
+        <input type="radio" name="mos" id="mos2" x-ng-model="reportParam.by" value="mo">
+        <label for="mos2">
+            <span><i class="icon-circle"></i></span> Для заданного количества муниципальных районов и городских округов
+        </label>
+    </div>
+
+
+    <div x-ng-show="reportParam.by === 'mo'">
+        <input type="button" x-ng-click="openDialog()" value="Выбрать муниципальное образование" class="btn-flat white">
+        <ul>
+            <li x-ng-repeat="mo in MO"
+                x-ng-show="reportParam.selectMO[mo.ID]==true">
+                {{mo.NameMO}}
+            </li>
+        </ul>
+    </div>
+
+    <h3>Отчеты</h3>
+
+
+    <h4>Последние данные в табличной форме</h4>
+
+    <div class="chbox">
+        <input type="checkbox" id="data11" x-ng-model="reportParam.tableDataMainInfo" x-ng-change="disableButton()">
+        <label for="data11">
+            <span><i class="icon-ok"></i></span> Общая информация
+        </label>
+    </div>
+
+    <div class="chbox">
+        <input type="checkbox" id="data12" x-ng-model="reportParam.tableDataDoc" x-ng-change="disableButton()">
+        <label for="data12">
+            <span><i class="icon-ok"></i></span> Правоустанавливающая документация ИСОГД
+        </label>
+    </div>
+
+    <div class="chbox">
+        <input type="checkbox" id="data13" x-ng-model="reportParam.tableDataFin" x-ng-change="disableButton()">
+        <label for="data13">
+            <span><i class="icon-ok"></i></span> Финансирование
+        </label>
+    </div>
+
+    <div class="chbox">
+        <input type="checkbox" id="data14" x-ng-model="reportParam.tableDataVolMean" x-ng-change="disableButton()">
+        <label for="data14">
+            <span><i class="icon-ok"></i></span> Показатели деятельности
+        </label>
+    </div>
+
+
+    <h4>Графики</h4>
+
+    <div class="chbox">
+        <input type="checkbox" id="data2" x-ng-model="reportParam.linearVolumeMeans" x-ng-change="disableButton()">
+        <label for="data2">
+            <span><i class="icon-ok"></i></span> Увеличение общего объема поступлений в бюджет МО за {{year}} год
+        </label>
+    </div>
+    <div class="chbox">
+        <input type="checkbox" id="data3" x-ng-model="reportParam.barIncrease" x-ng-change="disableButton()">
+        <label for="data3">
+            <span><i class="icon-ok"></i></span> Прирост поступлений в бюджет МО за {{year}} год
+        </label>
+    </div>
+    <div class="chbox">
+        <input type="checkbox" id="data4" x-ng-model="reportParam.linearQuantityFactsGrantingData"
+               x-ng-change="disableButton()">
+        <label for="data4">
+            <span><i class="icon-ok"></i></span> Увеличение количества фактов предоставления сведений отделом ведения
+            ИСОГД за {{year}} год
+        </label>
+    </div>
+    <div class="chbox">
+        <input type="checkbox" id="data6" x-ng-model="reportParam.pieQuantityFactsGrantingData"
+               x-ng-change="disableButton()">
+        <label for="data6">
+            <span><i class="icon-ok"></i></span> Количество фактов предоставления сведений ИСОГД за {{year}} год
+            (круговая диаграмма)
+        </label>
+    </div>
+    <div class="chbox">
+        <input type="checkbox" id="data5" x-ng-model="reportParam.barQuantityFactsGrantingData"
+               x-ng-change="disableButton()">
+        <label for="data5">
+            <span><i class="icon-ok"></i></span> Количество фактов предоставления сведний ИСОГД за {{year}} год
+        </label>
+    </div>
+    <div class="chbox">
+        <input type="checkbox" id="data8" x-ng-model="reportParam.barQuantityFactsGrantingDataCopy"
+               x-ng-change="disableButton()">
+        <label for="data8">
+            <span><i class="icon-ok"></i></span> Количество фактов предоставления копии одного документа ИСОГД за
+            {{year}} год
+        </label>
+    </div>
+    <div class="chbox" x-ng-show="reportParam.by != 'mo'">
+        <input type="checkbox" id="data7" x-ng-model="reportParam.log" x-ng-change="disableButton()">
+        <label for="data7">
+            <span><i class="icon-ok"></i></span> Активность пользователей за {{year}} год
+        </label>
+    </div>
+
+
+    <input type="button" class="btn-flat" x-ng-click="creteReport()" value="Сформировать" x-ng-disabled="disableRep">
+</div>
+
+<div class="print">
+<div x-ng-show="reportParam.tableDataMainInfo == true && filterIsogd.length>0">
+    <div class="pbreak" style="page-break-before: always;"></div>
+    <h4>Общая информация</h4>
+    <table class="table table-hover table-striped">
+        <thead class="col" style="display: table-header-group;">
+        <tr>
+            <th>№</th>
+            <th>
+                <span class="line"></span>
+                Наименование МО
+            </th>
+            <th>
+                <span class="line"></span>
+                Наименование структурного подразделения
+            </th>
+            <th>Исполнитель ответственный за ведение
+                <span class="line"></span>
+                ИСОГД(ФИО)
+            </th>
+            <th>
+                <span class="line"></span>
+                Рабочий телефон
+            </th>
+            <th>
+                <span class="line"></span>
+                Мобильный телефон
+            </th>
+            <th>
+                <span class="line"></span>
+                Адрес электронной почты
+            </th>
+            <th>
+                <span class="line"></span>
+                Муниципальных служащих
+            </th>
+            <th>
+                <span class="line"></span>
+                Не муниципальных служащих
+            </th>
+            <th>
+                <span class="line"></span>
+                Наименование ГИС-программы
+            </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr x-ng-repeat="record in filterIsogd">
+            <td>{{$index+1}}</td>
+            <td>{{record.NameMO}}</td>
+            <td>{{record.NameOfStructural}}</td>
+            <td>{{record.Executor}}</td>
+            <td class="wraping">{{record.Telefone1}}</td>
+            <td class="wraping">{{record.Telefone2}}</td>
+            <td class="wraping">{{record.email}}</td>
+            <td>{{record.NumberOfEmployees}}</td>
+            <td>{{record.NumberOfEmployees2}}</td>
+            <td>{{record.NameSoftwareProduct}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div x-ng-show="reportParam.tableDataDoc == true && filterIsogd.length>0">
+    <div class="pbreak" style="page-break-before: always;"></div>
+    <h4>Правоустанавливающая документация ИСОГД</h4>
+
+    <table class="table table-hover table-striped">
+        <thead class="col">
+        <tr>
+            <th>№</th>
+            <th>
+                <span class="line"></span>
+                Наименование МО
+            </th>
+            <th><span class="line"></span>
+                Наименование документа,
+                устанавливающего плату за предоставление сведений ИСОГД
+            </th>
+            <th><span class="line"></span>
+                Дата документа,
+                устанавливающего
+                плату за предоставление сведений ИСОГД
+            </th>
+            <th><span class="line"></span>
+                Размер платы за предоставление
+                сведений
+                для физ. лиц (руб.)
+            </th>
+            <th><span class="line"></span>
+                Размер платы за предоставление
+                сведений
+                для юр. лиц (руб.)
+            </th>
+            <th><span class="line"></span>
+                Размер платы за предоставление копии
+                одного документа для физ. лиц (руб.)
+            </th>
+            <th><span class="line"></span>
+                Размер платы за предоставление копии
+                одного документадля юр. лиц (руб.)
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr x-ng-repeat="record in filterIsogd">
+            <td>{{$index+1}}</td>
+            <td>{{record.NameMO}}</td>
+            <td>{{record.NameDocumentPayment}}</td>
+            <td>{{record.DateDocumentPayment.split(' ')[0]}}</td>
+            <td>{{record.SizePayment1}}</td>
+            <td>{{record.SizePayment2}}</td>
+            <td>{{record.SizePayment3}}</td>
+            <td>{{record.SizePayment4}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div x-ng-show="reportParam.tableDataFin == true && filterIsogd.length>0">
+    <div class="pbreak" style="page-break-before: always;"></div>
+    <h4>Финансирование</h4>
+
+    <table class="table table-hover table-striped">
+        <thead class="col">
+        <tr>
+            <th>№</th>
+            <th>
+                <span class="line"></span>
+                Наименование МО
+            </th>
+            <th>
+                <span class="line"></span>
+                Финансирование ИСОГД на текущий год
+            </th>
+            <th>
+                <span class="line"></span>
+                Фактическое финансирование
+                ИСОГД в текущем году
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr x-ng-repeat="record in filterIsogd">
+            <td>{{$index+1}}</td>
+            <td>{{record.NameMO}}</td>
+            <td>{{record.FinancingCurrentYear}}</td>
+            <td>{{record.ActualFinancingCurrentYear}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div x-ng-show="reportParam.tableDataVolMean == true && filterIsogd.length>0">
+    <div class="pbreak" style="page-break-before: always;"></div>
+    <h4>Показатели деятельности</h4>
+
+    <table class="table table-hover table-striped">
+        <thead class="col">
+        <tr>
+            <th>№</th>
+            <th>
+                <span class="line"></span>
+                Наименование МО
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов
+                предоставления сведений без взимания платы
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов
+                предоставления сведений с взиманием платы
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов
+                предоставления копии одного документа без взимания платы
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов
+                предоставления копии одного документа с взиманием платы
+            </th>
+            <th>
+                <span class="line"></span>Объем средств полученных бюджетом в текущем
+                году(тыс.руб.)
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr x-ng-repeat="record in filterIsogd">
+            <td>{{$index+1}}</td>
+            <td>{{record.NameMO}}</td>
+            <td>{{record.QuantityFactsGrantingData1}}</td>
+            <td>{{record.QuantityFactsGrantingData2}}</td>
+            <td>{{record.QuantityFactsGrantingData3}}</td>
+            <td>{{record.QuantityFactsGrantingData4}}</td>
+            <td>{{record.VolumeMeans}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div x-ng-show="printReport && reportParam.by == 'all'" class="clearfix print">
+    <div class="infB" x-ng-show="reportParam.linearVolumeMeans == true">
+        <div>
+            <h5>Увеличение общего объема поступлений в бюджет МО за {{year}} год</h5>
+
+            <div id="chartVolumeMeansMO" chart x-ng-model="chartVolumeMeansMO" class="chart"></div>
+        </div>
+    </div>
+
+    <div class="infB" x-ng-show="reportParam.barIncrease == true">
+        <div>
+            <h5>Прирост поступлений в бюджет МО за {{year}} год</h5>
+
+            <div id="chartIncrementMO" chart x-ng-model="chartIncrementMO" class="chart"></div>
+        </div>
+    </div>
+
+    <div class="pbreak" style="page-break-before: always;"></div>
+    <div class="infB" x-ng-show="reportParam.linearQuantityFactsGrantingData==true">
+        <div>
+            <h5>Увеличение количества фактов предоставления сведений отделом ведения ИСОГД за {{year}} год</h5>
+
+            <div id="chartQuantityFactsGrantingDataMO" chart x-ng-model="chartQuantityFactsGrantingDataMO"
+                 class="chart"></div>
+        </div>
+    </div>
+
+
+    <div class="infB" x-ng-show="reportParam.pieQuantityFactsGrantingData == true">
+        <div>
+            <h5>Количество фактов предоставления сведений ИСОГД за {{year}} год</h5>
+
+            <div id="chartQuantityFactsGrantingDataPieMO" chart x-ng-model="chartQuantityFactsGrantingDataPieMO"
+                 class="chart pie"></div>
+        </div>
+    </div>
+
+    <div class="pbreak" style="page-break-before: always;"></div>
+    <div class="infB" x-ng-show="reportParam.barQuantityFactsGrantingData==true">
+        <div>
+            <h5>Количество фактов предоставления сведний ИСОГД за {{year}} год</h5>
+
+            <div id="chartQuantityFactsGrantingDataIncrementMO1" chart
+                 x-ng-model="chartQuantityFactsGrantingDataIncrementMO1"
+                 class="chart"></div>
+        </div>
+    </div>
+    <div class="infB" x-ng-show="reportParam.barQuantityFactsGrantingDataCopy == true">
+        <div>
+            <h5>Количество фактов предоставления копии одного документа ИСОГД за {{year}} год</h5>
+
+            <div id="chartQuantityFactsGrantingDataIncrementMO2" chart
+                 x-ng-model="chartQuantityFactsGrantingDataIncrementMO2"
+                 class="chart"></div>
+
+        </div>
+    </div>
+    <div class="pbreak" style="page-break-before: always;"></div>
+    <div class="infB" x-ng-show="reportParam.log">
+        <div>
+            <h5>Активность пользователей за {{year}} год</h5>
+
+            <div id="chartLog" chart x-ng-model="chartLog"
+                 class="chart"></div>
+        </div>
+    </div>
+</div>
+
+<div x-ng-show="reportParam.by == 'mo'">
+    <div x-ng-repeat="graph in graphsRep">
+        <h3 class="graphLabel" x-ng-hide="graph.currentNameMO==''">{{graph.currentNameMO}}</h3>
+
+        <div>
+            <div class="infB">
+                <div>
+                    <h5>{{graph.title}}</h5>
+
+                    <div id="{{graph.id}}" chart x-ng-model="graph.data"
+                         class="chart"></div>
+                </div>
+            </div>
+            <div class="pbreak" style="page-break-before: always;" x-ng-show="$odd"></div>
+        </div>
+    </div>
+</div>
+

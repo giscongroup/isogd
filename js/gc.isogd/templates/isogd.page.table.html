@@ -1,0 +1,234 @@
+<div class="filter pull-right" style="margin: 20px 0 0 0;">
+    <i class="icon-search"></i>
+    <input x-ng-model="searchText" type="text" placeholder="фильтр">
+</div>
+<h3 style="width: 500px;">Сводная ведомость ИСОГД</h3>
+<div class="dataHolder">
+    <p>Количество записей в БД: <span>{{dbinfo.numberOfrecord}}</span></p>
+
+    <p>Общий объем средств: <span>{{dbinfo.volumemeans}}</span> тыс.руб.</p>
+</div>
+
+<div>
+
+    <ul class="nav nav-tabs">
+        <li x-ng-class="getClass('maininfo')">
+            <a x-ng-href="#/table/?tabtable=maininfo">Общая информация </a>
+        </li>
+        <li x-ng-class="getClass('document')">
+            <a x-ng-href="#/table/?tabtable=document">Правоустанавливающие
+                документы</a>
+        </li>
+        <li x-ng-class="getClass('finance')">
+            <a x-ng-href="#/table/?tabtable=finance">Финансирование</a>
+        </li>
+        <li x-ng-class="getClass('money')">
+            <a x-ng-href="#/table/?tabtable=money">Показатели деятельности </a>
+        </li>
+    </ul>
+
+</div>
+
+<div x-ng-switch on="activeTab" class="view-animate">
+
+    <div x-ng-switch-when="maininfo">
+
+        <table class="table table-hover table-striped">
+            <thead class="col">
+            <tr>
+                <th>№</th>
+                <th>
+                    <span class="line"></span>
+                    Наименование МО
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Наименование структурного подразделения
+                </th>
+                <th>Исполнитель ответственный за ведение
+                    <span class="line"></span>
+                    ИСОГД(ФИО)
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Рабочий телефон
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Мобильный телефон
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Адрес электронной почты
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Муниципальных служащих
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Не муниципальных служащих
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Наименование ГИС-программы
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr x-ng-repeat="record in filterIsogd">
+                <td>{{record.ID}}</td>
+                <td>{{record.NameMO}}</td>
+                <td>{{record.NameOfStructural}}</td>
+                <td>{{record.Executor}}</td>
+                <td class="wraping">{{record.Telefone1}}</td>
+                <td class="wraping">{{record.Telefone2}}</td>
+                <td class="wraping">{{record.email}}</td>
+                <td>{{record.NumberOfEmployees}}</td>
+                <td>{{record.NumberOfEmployees2}}</td>
+                <td>{{record.NameSoftwareProduct}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div x-ng-switch-when="finance">
+
+        <table class="table table-hover table-striped">
+            <thead class="col">
+            <tr>
+                <th>№</th>
+                <th>
+                    <span class="line"></span>
+                    Наименование МО
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Финансирование ИСОГД на текущий год
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Фактическое финансирование
+                    ИСОГД в текущем году
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr x-ng-repeat="record in filterIsogd">
+                <td>{{record.ID}}</td>
+                <td>{{record.NameMO}}</td>
+                <td>{{record.FinancingCurrentYear}}</td>
+                <td>{{record.ActualFinancingCurrentYear}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div x-ng-switch-when="money">
+
+        <table class="table table-hover table-striped">
+            <thead class="col">
+            <tr>
+                <th>№</th>
+                <th>
+                    <span class="line"></span>
+                    Наименование МО
+                </th>
+                <th>
+                    <span class="line"></span>Количество фактов
+                    предоставления сведений без взимания платы
+                </th>
+                <th>
+                    <span class="line"></span>Количество фактов
+                    предоставления сведений с взиманием платы
+                </th>
+                <th>
+                    <span class="line"></span>Количество фактов
+                    предоставления копии одного документа без взимания платы
+                </th>
+                <th>
+                    <span class="line"></span>Количество фактов
+                    предоставления копии одного документа с взиманием платы
+                </th>
+                <th>
+                    <span class="line"></span>Объем средств полученных бюджетом в текущем
+                    году(тыс.руб.)
+                </th>
+                <th>
+                    <span class="line"></span>Количество фактов отказа
+                </th>
+                <th>
+                    <span class="line"></span>Неоплаченные заявки
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr x-ng-repeat="record in filterIsogd">
+                <td>{{record.ID}}</td>
+                <td>{{record.NameMO}}</td>
+                <td>{{record.QuantityFactsGrantingData1}}</td>
+                <td>{{record.QuantityFactsGrantingData2}}</td>
+                <td>{{record.QuantityFactsGrantingData3}}</td>
+                <td>{{record.QuantityFactsGrantingData4}}</td>
+                <td>{{record.VolumeMeans}}</td>
+                <td>{{record.denials}}</td>
+                <td>{{record.unpaidRequests}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div x-ng-switch-when="document">
+
+        <table class="table table-hover table-striped">
+            <thead class="col">
+            <tr>
+                <th>№</th>
+                <th>
+                    <span class="line"></span>
+                    Наименование МО
+                </th>
+                <th><span class="line"></span>
+                    Наименование документа,
+                    устанавливающего плату за предоставление сведений ИСОГД
+                </th>
+                <th><span class="line"></span>
+                    Дата документа,
+                    устанавливающего
+                    плату за предоставление сведений ИСОГД
+                </th>
+                <th><span class="line"></span>
+                    Размер платы за предоставление
+                    сведений
+                    для физ. лиц (руб.)
+                </th>
+                <th><span class="line"></span>
+                    Размер платы за предоставление
+                    сведений
+                    для юр. лиц (руб.)
+                </th>
+                <th><span class="line"></span>
+                    Размер платы за предоставление копии
+                    одного документа для физ. лиц (руб.)
+                </th>
+                <th><span class="line"></span>
+                    Размер платы за предоставление копии
+                    одного документадля юр. лиц (руб.)
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr x-ng-repeat="record in filterIsogd">
+                <td>{{record.ID}}</td>
+                <td>{{record.NameMO}}</td>
+                <td>{{record.NameDocumentPayment}}</td>
+                <td>{{record.DateDocumentPayment.split(' ')[0]}}</td>
+                <td>{{record.SizePayment1}}</td>
+                <td>{{record.SizePayment2}}</td>
+                <td>{{record.SizePayment3}}</td>
+                <td>{{record.SizePayment4}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,139 @@
+<div class="clearfix week">
+    <div style="position: absolute; left: 149px; width: 1px; top: 20px; bottom: 20px; background-color: #ddd;"></div>
+    <div class="tabbable tabs-left">
+        <ul class="nav nav-tabs">
+            <li class="" x-ng-repeat="month in twoWeeks">
+                <a class="dropdown-switch" x-ng-href="#{{path}}?week={{month.halfs[0]}}">{{month.monthName}}</a>
+
+                <ul class="dropdown-menu">
+                    <li x-ng-class="getClass(month.halfs[0])">
+                        <a x-ng-href="#{{path}}?week={{month.halfs[0]}}">первая половина</a>
+                    </li>
+                    <li x-ng-class="getClass(month.halfs[1])" x-ng-show="month.halfs.length>1">
+                        <a x-ng-href="#{{path}}?week={{month.halfs[1]}}">вторая половина</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+
+    <form name="form" x-ng-submit="close(activeWeek)" class="clearfix">
+        <div class="date pull-right">{{year}} год</div>
+        <h3>Редактирование</h3>
+
+        <div class="field-box">
+            <label>Количество фактов предоставления сведений<span>содержащихся в одном разделе ИСОГД (без взимания
+            платы)</span>
+            </label>
+
+            <div>
+                <input required name="QuantityFactsGrantingData1" x-ng-model="activeWeek.QuantityFactsGrantingData1"
+                       type="text" x-ng-Pattern="/^[0-9]*$/">
+            <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData1.$error.required"><i
+                    class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
+            <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData1.$error.pattern"><i
+                    class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+        </div>
+        <div class="field-box">
+            <label>Количество фактов предоставления
+                сведений<span>содержащихся в одном разделе ИСОГД (с взиманием платы)</span>
+            </label>
+
+            <div>
+                <input required name="QuantityFactsGrantingData2" x-ng-model="activeWeek.QuantityFactsGrantingData2"
+                       type="text" x-ng-Pattern="/^[0-9]*$/">
+            <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData2.$error.required"><i
+                    class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
+            <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData2.$error.pattern"><i
+                    class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+        </div>
+        <div class="field-box">
+            <label>Количество фактов предоставления копии одного документа<span>содержащегося в ИСОГД (без взимания
+            платы)</span>
+            </label>
+
+            <div>
+                <input required name="QuantityFactsGrantingData3" x-ng-model="activeWeek.QuantityFactsGrantingData3"
+                       type="text" x-ng-Pattern="/^[0-9]*$/">
+            <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData3.$error.required"><i
+                    class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
+            <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData3.$error.pattern"><i
+                    class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+        </div>
+        <div class="field-box">
+            <label>Количество фактов предоставления копии одного документа<span>содержащегося в ИСОГД (с взиманием
+            платы)</span>
+            </label>
+
+            <div>
+                <input required name="QuantityFactsGrantingData4" x-ng-model="activeWeek.QuantityFactsGrantingData4"
+                       type="text" x-ng-Pattern="/^[0-9]*$/">
+            <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData4.$error.required"><i
+                    class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
+            <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData4.$error.pattern"><i
+                    class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+        </div>
+        <div class="field-box">
+            <label>Объем средств, полученных бюджетом муниципального образования<span>за предоставление сведений ИСОГД в
+            текущем году, тыс. руб.</span>
+            </label>
+
+            <div>
+                <input required name="VolumeMeans" x-ng-model="activeWeek.VolumeMeans" type="text"
+                       x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
+            <span class="label1 label-important" x-ng-show="form.VolumeMeans.$error.required"><i
+                    class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
+            <span class="label1 label-important"
+                  x-ng-show="form.VolumeMeans.$error.pattern"><i class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+
+        </div>
+
+        <div class="field-box">
+            <label>Количество фактов отказа</span>
+            </label>
+
+            <div>
+                <input required name="denials" x-ng-model="activeWeek.denials" type="text"
+                       x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
+            <span class="label1 label-important" x-ng-show="form.denials.$error.required"><i
+                    class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
+            <span class="label1 label-important"
+                  x-ng-show="form.denials.$error.pattern"><i
+                    class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+
+        </div>
+
+        <div class="field-box">
+            <label>Неоплаченные заявки</span>
+            </label>
+
+            <div>
+                <input required name="unpaidRequests" x-ng-model="activeWeek.unpaidRequests" type="text"
+                       x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
+            <span class="label1 label-important" x-ng-show="form.unpaidRequests.$error.required"><i
+                    class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
+            <span class="label1 label-important"
+                  x-ng-show="form.unpaidRequests.$error.pattern"><i class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+
+        </div>
+
+        <button x-ng-click="close()" class="btn-flat danger">Отмена</button>
+
+        <input class="btn-flat" x-ng-disabled="form.$invalid" type="submit" value="СОХРАНИТЬ">
+    </form>
+</div>

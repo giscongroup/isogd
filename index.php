@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ИСОГД | Департамент по архитектуре и градостроительству Краснодарского края</title>
+
+    <meta charset="utf-8">
+    <meta name="fragment" content="!">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <!--no cache -->
+    <meta http-equiv="cache-control" content="max-age=0"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="js/wml.isogd/css/font-awesome.css">
+    <!--    <link rel="stylesheet" href="js/wml.isogd/css/css.min.css">-->
+    <link rel="stylesheet" href="js/wml.isogd/css/css.css">
+
+    <script type="text/javascript" src="lib/underscore-min.js"></script>
+    <script type="text/javascript" src="js/wml.isogd/modules/raphael.js"></script>
+
+    <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular/angular-route.min.js"></script>
+    <script type="text/javascript" src="lib/angular/angular-animate.min.js"></script>
+    <script type="text/javascript" src="lib/angular/angular-resource.min.js"></script>
+
+    <script type="text/javascript" src="lib/ui-bootstrap-0.5.0.min.js"></script>
+    <script type="text/javascript" src="lib/ui-bootstrap-tpls-0.5.0.min.js"></script>
+
+    <script type="text/javascript" src="js/wml.js"></script>
+    <!--    <script type="text/javascript" src="js/wml.isogd/wml.isogd.min.js"></script>-->
+    <script type="text/javascript" src="js/wml.isogd/wml.isogd.js"></script>
+
+    <script type="text/javascript" src="lib/mask.min.js"></script>
+
+    <script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script>
+    <script src="lib/jquery.flot.min.js"></script>
+    <script src="lib/jquery.flot.pie.min.js"></script>
+
+</head>
+<body x-ng-app="wml.isogd" x-ng-cloak x-ng-controller="isogd.page.main">
+
+
+<!--шапка-->
+
+<header class="navbar navbar-inverse navbar-fixed-top mainM">
+
+    <div class="navbar-inner" x-ng-show="user.session_id != undefined">
+        <ul class="nav pull-right">
+            <li x-ng-class="classOpen">
+                <a class="dropdown-mes" x-ng-click="openMesBox()">
+                    <i class="icon-envelope-alt"></i>
+                    <span class="count" x-ng-show="user.newMessageCount>0">{{user.newMessageCount}}</span>
+                </a>
+
+                <ul class="dropdown-menu mes">
+                    <a x-ng-click="openMesBox()"><i class="icon-remove-sign"></i></a>
+                    <h6>Новых сообщений: {{user.newMessageCount}}</h6>
+                    <li x-ng-repeat="message in user.messages | limitTo:5"
+                        x-ng-click="openMsg($event, message)" x-ng-class="isRead(message)">
+                        <a>
+                            <span>
+                                <i class="icon-time"></i>
+                                {{message.passedTime}}
+                            </span>
+                            <i class="icon-envelope"></i>
+                            <i class="icon-envelope-alt"></i>
+                            <i x-ng-show="message.mailfrom == user.session_id" class="icon-signout"></i>
+                            <i x-ng-show="message.mailto == user.session_id" class="icon-signin"></i>
+
+                            <p>{{message.NameMO}}</p>
+
+
+                        </a>
+                    </li>
+
+                    <div class="footer">
+                        <a x-ng-click="closeMsg($event)" x-ng-href="#/messages/">Просмотреть все сообщения</a>
+                    </div>
+                </ul>
+            </li>
+            <!--            <li><a><i class="icon-cog"></i></a></li>-->
+            <li><a x-ng-href="js/wml.isogd/guide/Руководство_пользователя.pdf" target="_blank">
+<!--                    <i class="icon-question"></i>-->
+                    <span>Руководство пользователя</span></a></li>
+        </ul>
+        <a href="#" class="brand"><i class="icon-signal"></i> <span>Мониторинг</span> показателей
+            эффективности</a>
+    </div>
+
+</header>
+
+
+<!--    информация о пользователе-->
+<div class="userid" x-ng-show="user.session_id != undefined">
+
+
+    <img width="50px" height="50px" class="uspic" src="js/wml.isogd/img/member_ph.png" title="">
+
+    <p class="right" x-ng-show="user.manager == 1">Администратор</p>
+
+    <p class="right" x-ng-show="user.manager == 0">Пользователь</p>
+
+    <p class="name f">{{(user.nameMO).split(' ')[0]}}</p>
+
+    <p class="name">{{(user.nameMO).split(' ')[1]+' '+(user.nameMO).split(' ')[2]}}</p>
+
+    <div class="inlCont">
+        <p>Номер в БД: <a>{{user.session_id}}</a></p>
+        |
+        <a x-ng-click="sessionClose()">Выйти</a>
+    </div>
+</div>
+
+<div x-ng-show="user.manager == 0">
+    <!--    статистика-->
+    <div class="stat clearfix">
+        <div>
+            <div>
+                <div class="data"><b>{{stat.lastupdate.getDate()}}
+                        <span>{{monthArray[stat.lastupdate.getMonth()]}}</span></b><label>дата
+                        последнего
+                        обновления</label></div>
+                <div class="date">{{stat.year}} год</div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <div class="data"><b>{{stat.numberOfRecord}}</b><label>количество записей в БД</label></div>
+                <div class="date">за {{stat.month}} {{stat.year}} года</div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <div class="data"><b>{{stat.sumByMonth}} <span>тыс.руб.</span></b><label>получено бюджетом МО</label>
+                </div>
+                <div class="date">за {{stat.month}} {{stat.year}} года</div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <div class="data"><b>{{stat.sumByYear}} <span>тыс.руб.</span></b><label>получено бюджетом МО</label>
+                </div>
+                <div class="date">за {{stat.year}} год</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--    Меню для муниципальных образований-->
+<div class="sidemenu" x-ng-show="user.manager == 0">
+    <ul class="nav nav-list">
+        <li x-ng-class="getClass(['/mo/main/'])">
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+            <a href="#/mo/main/">
+                <i class="icon-home"></i>
+                <span>Главная</span>
+            </a>
+        </li>
+
+        <li x-ng-class="getClass(['/publicmap/'])">
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+            <a href="#/publicmap/">
+                <i class="icon-globe"></i>
+                <span>Карта показателей эффективности</span>
+            </a>
+        </li>
+
+
+        <li class="open" x-ng-class="getClass(['/mo/form/maininfo/', '/mo/form/isogd/'])">
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+            <a class="dropdown-toggle">
+                <i class="icon-table"></i>
+                <span>Формы</span>
+                <i class="icon-chevron-down"></i>
+            </a>
+            <ul class="dropdown-menu tall">
+                <li x-ng-class="getClass(['/mo/form/maininfo/'])"><a href="#/mo/form/maininfo/">Общая информация</a>
+                </li>
+                <li x-ng-class="getClass(['/mo/form/isogd/'])"><a href="#/mo/form/isogd/?tab=data">ИСОГД</a></li>
+
+                <li><a href="">Нормативы градостроительного
+                        проектирования</a></li>
+                <li><a href="">Самовольное строительство</a></li>
+                <li><a href="">423-р</a></li>
+                <li><a href="">Исполнение полномочий</a></li>
+            </ul>
+        </li>
+
+
+        <li class="open">
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+            <a class="dropdown-toggle">
+                <i class="icon-cogs"></i>
+                <span>Инструменты</span>
+                <i class="icon-chevron-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li x-ng-class="getClass(['/check/'])"><a href="#/check/">Контроль данных</a></li>
+            </ul>
+        </li>
+
+
+    </ul>
+</div>
+
+
+<div x-ng-show="user.manager == 1">
+
+
+    <!--    статистика-->
+    <div class="stat clearfix">
+        <div>
+            <div>
+                <div class="data"><b>{{stat.updatesCount}}</b><label>записей обновлено</label></div>
+                <div class="date">за {{stat.month}} {{stat.year}} года</div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <div class="data"><b>{{stat.updatesUserCount}}</b><label>активных
+                        пользователей</label>
+                </div>
+                <div class="date">всего {{stat.userCount}}</div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <div class="data"><b>{{stat.sumByMonth}} <span>тыс.руб.</span></b><label>получено бюджетом</label></div>
+                <div class="date">за {{stat.month}} {{stat.year}} года</div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <div class="data"><b>{{stat.sumByYear}} <span>тыс.руб.</span></b><label>получено бюджетом</label></div>
+                <div class="date">за {{stat.year}} год</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sidemenu" x-ng-show="user.manager == 1">
+    <ul class="nav nav-list">
+
+        <li x-ng-class="getClass(['/main/'])">
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+            <a href="#/main/">
+                <i class="icon-home"></i>
+                <span>Главная</span>
+            </a>
+        </li>
+
+        <li class="open" x-ng-class="getClass(['/publicmap/', '/table/'])">
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+            <a class="dropdown-toggle">
+                <i class="icon-table"></i>
+                <span>Формы</span>
+                <i class="icon-chevron-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li x-ng-class="getClass(['/publicmap/'])">
+                    <a href="#/publicmap/">Карта показателей эффективности</a>
+                </li>
+                <li x-ng-class="getClass(['/table/'])">
+                    <a href="#/table/">Сводная ведомость ИСОГД</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="open" x-ng-class="getClass(['/graph/all/', '/dynamic/', '/graph/mo/'])">
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+            <a class="dropdown-toggle">
+                <i class="icon-signal"></i>
+                <span>Графики</span>
+                <i class="icon-chevron-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li x-ng-class="getClass(['/graph/all/'])">
+                    <a href="#/graph/all/">Объем услуг ИСОГД по МО</a>
+                </li>
+                <li x-ng-class="getClass(['/dynamic/'])">
+                    <a href="#/dynamic/">Динамические показатели</a>
+                </li>
+                <li x-ng-class="getClass(['/graph/mo/'])">
+                    <a href="#/graph/mo/">Показатели по МО</a>
+                </li>
+            </ul>
+        </li>
+
+
+        <li x-ng-class="getClass(['/reports/'])">
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+            <a href="#/reports/">
+                <i class="icon-cogs"></i>
+                <span>Редактор отчетов</span>
+            </a>
+        </li>
+        <li class="open">
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+            <a class="dropdown-toggle">
+                <i class="icon-download-alt"></i>
+                <span>Загрузка данных</span>
+                <i class="icon-chevron-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="">
+                        База данных .mdb
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+    </ul>
+</div>
+
+
+<div x-ng-cloak class="content clearfix" x-ng-class="botclass" x-ng-view>
+
+</div>
+
+
+<script type="text/javascript" src="js/wml.isogd/krasnodar_region_svg.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.directive.chart.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.resource.getdata.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.login.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.publicmap.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.formMainInfo.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.formISOGD.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.standards.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.table.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.MOstat.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.MOmain.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.graphVolumeMeans.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.adminMain.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.graphsByMO.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.dynamicParam.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.reports.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.datacheck.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.message.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.dialog.message.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.dialog.selectMO.js"></script>
+<script type="text/javascript" src="js/wml.isogd/modules/isogd.dialog.weekISOGD.js"></script>
+
+
+</body>
+</html>

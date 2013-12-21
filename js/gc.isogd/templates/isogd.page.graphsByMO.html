@@ -1,0 +1,95 @@
+<div class="moInfo">
+
+    <h4>{{currentMO.NameMO}}</h4>
+
+    <div class="field">
+        Глава муниципального образования: <p>{{currentMO.HeadMunicipality}}</p>
+    </div>
+    <div class="field">
+        Ответственный за ведение ИСОГД: <p>{{currentISOGD.Executor}}</p>
+    </div>
+    <div class="field">
+        Объем средств, поступивших в бюджет с 01.01.{{year}} по {{day}}.{{month}}.{{year}}
+        <p>{{currentISOGD.VolumeMeans}}</p> тыс.руб.
+    </div>
+    <div class="field">
+        Количество фактов предоставления сведений:
+        <p>
+            {{currentISOGD.QuantityFactsGrantingData1+currentISOGD.QuantityFactsGrantingData2+currentISOGD.QuantityFactsGrantingData3+currentISOGD.QuantityFactsGrantingData4}}</p>
+    </div>
+    <div class="field">
+        Номер телефона: <p>{{currentMO.Telefone}}</p>
+    </div>
+    <div class="field">
+        Адрес электронной почты: <p>{{currentMO.Email}}</p>
+    </div>
+</div>
+
+
+<div class="molist">
+    <i class="btn-flat icon-minus" x-ng-click="turnList($event)"></i>
+
+    <div class="filter">
+        <i class="icon-search"></i>
+        <input x-ng-model="search.NameMO" type="text" placeholder="фильтр">
+    </div>
+    <div class="scroll">
+        <ul>
+            <li x-ng-repeat="mo in mo | filter: search"
+                x-ng-show="mo.TipMO === 'Муниципальный район' || mo.TipMO === 'Городской округ'"
+                x-ng-class="getClass(mo.ID)">
+                <i class="icon-reorder"></i>
+                <a x-ng-href="#/graph/mo/?idmo={{mo.ID}}">{{mo.NameMO}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="cholder">
+
+    <!--<h4>Статистика</h4>-->
+    <div class="infB">
+        <div>
+            <h5>Увеличение общего объема поступлений в бюджет МО за {{year}} год (тыс.руб.)</h5>
+
+            <div id="chartVolumeMeansMO" chart x-ng-model="chartVolumeMeansMO" class="chart"></div>
+        </div>
+    </div>
+    <div class="infB">
+        <div><h5>Поступления в бюджет МО в {{year}} году (тыс.руб.)</h5>
+
+            <div id="chartIncrementMO" chart x-ng-model="chartIncrementMO" class="chart"></div>
+        </div>
+    </div>
+    <div class="infB">
+        <div><h5 style="height: 36px">Увеличение количества фактов предоставления сведений отделом ведения ИСОГД за
+            {{year}} год</h5>
+
+            <div id="chartQuantityFactsGrantingDataMO" chart x-ng-model="chartQuantityFactsGrantingDataMO"
+                 class="chart"></div>
+        </div>
+    </div>
+    <div class="infB">
+        <div><h5>Количество фактов предоставления сведений ИСОГД за {{year}} год</h5>
+
+            <div id="chartQuantityFactsGrantingDataPieMO" chart x-ng-model="chartQuantityFactsGrantingDataPieMO"
+                 class="chart pie"></div>
+        </div>
+    </div>
+    <div class="infB">
+        <div><h5>Количество фактов предоставления сведний ИСОГД за {{year}} год</h5>
+
+            <div id="chartQuantityFactsGrantingDataIncrementMO1" chart
+                 x-ng-model="chartQuantityFactsGrantingDataIncrementMO1"
+                 class="chart"></div>
+        </div>
+    </div>
+    <div class="infB">
+        <div><h5>Количество фактов предоставления копии одного документа ИСОГД за {{year}} год</h5>
+
+            <div id="chartQuantityFactsGrantingDataIncrementMO2" chart
+                 x-ng-model="chartQuantityFactsGrantingDataIncrementMO2"
+                 class="chart"></div>
+        </div>
+    </div>
+</div>

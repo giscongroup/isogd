@@ -1,0 +1,76 @@
+<div><h4>Количество записей в БД: {{dbinfo.numberOfrecord}}</h4></div>
+<div><h4>Общий объем средств: {{dbinfo.volumemeans}}</h4></div>
+
+
+<input class="btn btn-metro" type="file" name="file" multiple
+       onchange="angular.element(this).scope().setFiles(this)"><br/>
+
+<div x-ng-show="filesupload">Файлы загружены успешно</div>
+<div x-ng-show="filesuploaderror">Ошибка при загрузке файлов</div>
+
+<ul>
+    <li x-ng-repeat="file in MOfiles" x-ng-show="file.deleteDate==undefined"><a href="{{file.url}}"> {{file.filename}}</a>   <input type="button" value="delete" x-ng-click="deleteFile(file)"></li>
+</ul>
+
+
+<b>Фильтр</b><br>
+<input x-ng-model="searchText" type="text" x-ng-change = "filter()"><br>
+
+<input type="radio" x-ng-model="period" value="lastdata" x-ng-change="filter()">Последние данные <br/>
+<input type="radio" x-ng-model="period" value="thisyear" x-ng-change="filter()">Текущий год <br/>
+<input type="radio" x-ng-model="period" value="lastyear" x-ng-change="filter()">Прошлый год <br/>
+
+
+<input type="checkbox" x-ng-model="maininfo">Общая информация<br>
+<input type="checkbox" x-ng-model="document">Правоустанавливающая документация ИСОГД<br>
+<input type="checkbox" x-ng-model="money">Показатели деятельности<br>
+
+
+<table border="1">
+    <tr>
+        <td x-ng-show="maininfo" x-ng-click = "sortdata('NumberOfEmployees')">Муниципальных служащих</td>
+        <td x-ng-show="maininfo"  x-ng-click = "sortdata('NumberOfEmployees2')">Не муниципальных служащих</td>
+        <td x-ng-show="maininfo"  x-ng-click = "sortdata('FinancingCurrentYear')">Финансирование ИСОГД на текущий год</td>
+        <td x-ng-show="maininfo" x-ng-click = "sortdata('ActualFinancingCurrentYear')">Фактическое финансирование ИСОГД в текущем году</td>
+        <td x-ng-show="document" x-ng-click = "sortdata('NameDocumentPayment')">Наименование документа, устанавливающего плату за предоставление сведений ИСОГД</td>
+        <td x-ng-show="document" x-ng-click = "sortdata('DateDocumentPayment')">Дата документа, устанавливающего плату за предоставление сведений ИСОГД</td>
+        <td x-ng-show="document" x-ng-click = "sortdata('SizePayment1')">Размер платы за предоставление сведений для физ. лиц</td>
+        <td x-ng-show="document" x-ng-click = "sortdata('SizePayment2')">Размер платы за предоставление сведений для юр. лиц</td>
+        <td x-ng-show="document" x-ng-click = "sortdata('SizePayment3')">Размер платы за предоставление копии одного документа для физ. лиц</td>
+        <td x-ng-show="document" x-ng-click = "sortdata('SizePayment4')">Размер платы за предоставление копии одного документадля юр. лиц</td>
+        <td x-ng-show="money" x-ng-click = "sortdata('QuantityFactsGrantingData1')">Количество фактов предоставления сведений без взимания платы</td>
+        <td x-ng-show="money" x-ng-click = "sortdata('QuantityFactsGrantingData2')">Количество фактов предоставления сведений с взиманием платы</td>
+        <td x-ng-show="money" x-ng-click = "sortdata('QuantityFactsGrantingData3')">Количество фактов предоставления копии одного документа без взимания платы</td>
+        <td x-ng-show="money" x-ng-click = "sortdata('QuantityFactsGrantingData4')">Количество фактов предоставления копии одного документа с взиманием платы</td>
+        <td x-ng-show="money" x-ng-click = "sortdata('VolumeMeans')">Объем средств полученных бюджетом в текущем году(тыс.руб)</td>
+        <td x-ng-show="maininfo"  x-ng-click = "sortdata('NameSoftwareProduct')">Наименование ГИС-программы</td>
+        <td x-ng-show="maininfo" x-ng-click = "sortdata('Executor')">Исполнитель ответственный за ведение ИСОГД (Фамилия Имя Отчество)</td>
+        <td x-ng-show="maininfo" x-ng-click = "sortdata('Telefone1')">Рабочий телефон</td>
+        <td x-ng-show="maininfo" x-ng-click = "sortdata('Telefone2')">Мобильный телефон</td>
+        <td x-ng-show="maininfo" x-ng-click = "sortdata('email')">Адрес электронной почты</td>
+        <td x-ng-show="maininfo" x-ng-click = "sortdata('CreateDate')" x-ng-show="record.CreateDate != undefined">Дата внесения сведений</td>
+    </tr>
+    <tr x-ng-repeat="record in filterIsogd" x-ng-show="record.VolumeMeans != undefined" x-ng-click="edit(record)">
+        <td x-ng-show="maininfo">{{record.NumberOfEmployees}}</td>
+        <td x-ng-show="maininfo">{{record.NumberOfEmployees2}}</td>
+        <td x-ng-show="maininfo">{{record.FinancingCurrentYear}}</td>
+        <td x-ng-show="maininfo">{{record.ActualFinancingCurrentYear}}</td>
+        <td x-ng-show="document">{{record.NameDocumentPayment}}</td>
+        <td x-ng-show="document">{{record.DateDocumentPayment}}</td>
+        <td x-ng-show="document">{{record.SizePayment1}}</td>
+        <td x-ng-show="document">{{record.SizePayment2}}</td>
+        <td x-ng-show="document">{{record.SizePayment3}}</td>
+        <td x-ng-show="document">{{record.SizePayment4}}</td>
+        <td x-ng-show="money">{{record.QuantityFactsGrantingData1}}</td>
+        <td x-ng-show="money">{{record.QuantityFactsGrantingData2}}</td>
+        <td x-ng-show="money">{{record.QuantityFactsGrantingData3}}</td>
+        <td x-ng-show="money">{{record.QuantityFactsGrantingData4}}</td>
+        <td x-ng-show="money">{{record.VolumeMeans}}</td>
+        <td x-ng-show="maininfo">{{record.NameSoftwareProduct}}</td>
+        <td x-ng-show="maininfo">{{record.Executor}}</td>
+        <td x-ng-show="maininfo">{{record.Telefone1}}</td>
+        <td x-ng-show="maininfo">{{record.Telefone2}}</td>
+        <td x-ng-show="maininfo">{{record.email}}</td>
+        <td x-ng-show="maininfo" x-ng-show="record.CreateDate != undefined">{{record.CreateDate}}</td>
+    </tr>
+</table>

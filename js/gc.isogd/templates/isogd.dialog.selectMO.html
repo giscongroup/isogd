@@ -1,0 +1,47 @@
+<div class="chbox pull-right">
+    <input type="checkbox" id="sel1" x-ng-model="showSelected">
+    <label for="sel1">
+        <span><i class="icon-ok"></i></span> <b>Показать только выбранные</b>
+    </label>
+</div>
+<div class="filter" style="width: 500px;">
+    <i class="icon-search"></i>
+    <input x-ng-model="searchText" type="text" placeholder="фильтр" class="ng-pristine ng-valid">
+</div>
+<div class="molist selmo">
+
+
+    <!--<input x-ng-model="searchText" type="text"><br>-->
+
+    <ul class="listmo">
+        <li x-ng-repeat="mo in filterMO | startFrom:currentPage*pageSize | limitTo:pageSize">
+
+
+            <div class="chbox">
+                <input type="checkbox" id="mo{{$index}}" x-ng-model="selectMO[mo.ID]" x-ng-change="filterFun()">
+                <label for="mo{{$index}}">
+                    <span><i class="icon-ok"></i></span> {{mo.NameMO}}
+                </label>
+            </div>
+        </li>
+    </ul>
+
+    <div class="pagination">
+        <ul>
+            <li>
+                <button x-ng-disabled="currentPage == 0" x-ng-click="currentPage=currentPage-1"><</button>
+            </li>
+            <li x-ng-repeat="page in pagearray" x-ng-click="changePage(page)" x-ng-class="getClass(page)">
+                <a>{{page}}</a></li>
+            <li>
+                <button x-ng-disabled="currentPage >= filterMO.length/pageSize - 1"
+                        ng-click="currentPage=currentPage+1">>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <input type="button" class="btn-flat" x-ng-click="close(selectMO)" value="Выбрать">
+    <input type="button" class="btn-flat danger" x-ng-click="close()" value="Отмена">
+
+</div>

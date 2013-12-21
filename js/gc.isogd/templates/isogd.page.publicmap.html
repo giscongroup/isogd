@@ -1,0 +1,47 @@
+<h3>Карта показателей эффективности</h3>
+<ul class="nav nav-tabs otst">
+    <li x-ng-class="getClass('color')">
+        <a x-ng-href="#/publicmap/?tabmap=color">Показатели эффективности</a>
+    </li>
+    <li x-ng-class="getClass('volumeMeans')">
+        <a x-ng-href="#/publicmap/?tabmap=volumeMeans">Поступлений в бюджет</a>
+    </li>
+    <li x-ng-class="getClass('grantingData')">
+        <a x-ng-href="#/publicmap/?tabmap=grantingData">Количество предоставленных сведений</a>
+    </li>
+</ul>
+
+
+<div style="left: {{x}}px; top: {{y}}px" class="mapInfo" x-ng-show='moToDisplay!=undefined'>
+    <div class="pointer">
+        <div class="arrow"></div>
+        <div class="arrow_border"></div>
+    </div>
+    <h5>{{moToDisplay.NameMO}}</h5>
+
+    <div class="field">Поступлений в бюджет:<span>{{isogdDataToDisplay[0]}}</span> тыс.руб.</div>
+    <div class="field">Количество фактов предоставления сведений:<span>{{isogdDataToDisplay[1]}}</span></div>
+
+</div>
+
+<div class="maplegend">
+    <h4>Условные обозначения</h4>
+
+    <div x-ng-repeat="record in legend" class="litem" x-ng-hide="activeTab == 'color' && ($index==1 || $index==3)">
+        <div x-ng-style="record.style">
+        </div>
+
+        <p>{{record.label}}</p>
+    </div>
+
+
+</div>
+<div id="paperMap" style="overflow: visible;"></div>
+
+<table>
+    <tr>
+        <td></td>
+    </tr>
+</table>
+
+

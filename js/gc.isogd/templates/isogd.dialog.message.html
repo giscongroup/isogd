@@ -1,0 +1,64 @@
+<div class="crmes clearfix" x-ng-show="message.Code == undefined">
+    <h3><i class="icon-envelope"></i> Создание сообщения</h3>
+
+    <div class="field-box from">
+        <label>Кому:</span></label>
+
+        <div>
+            <button class="btn-flat white" x-ng-click="openDialog()">Выбрать</button>
+            <p x-ng-hide="selectMOArray.length >= 0">Ничего не выбрано</p>
+            <ul>
+                <li x-ng-repeat="mo in selectMOArray | limitTo:pageSize"
+                    x-ng-show="selectMO[mo.ID]==true"><i class="icon-angle-right"></i>{{mo.NameMO}}
+                </li>
+                <li x-ng-show="selectMOArray.length>pageSize"><a x-ng-click="openDialog()">...</a></li>
+            </ul>
+
+        </div>
+    </div>
+
+
+    <div class="field-box">
+        <label>Текст сообщения:</span></label>
+
+        <div>
+            <textarea rows="5" x-ng-model="message.textMSG"></textarea>
+        </div>
+    </div>
+
+    <button x-ng-click="close()" class="btn-flat danger">Отмена</button>
+    <button x-ng-click="close(message)" class="btn-flat">Отправить</button>
+</div>
+
+<div class="remes clearfix" x-ng-hide="message.Code == undefined">
+    <div class="date pull-right">{{message.createdate | date:'HH:mm dd.MM'}}</div>
+    <h3><i class="icon-envelope"></i> Сообщение</h3>
+
+    <div class="field-box from">
+
+        <label x-ng-show="message.mailfrom==user.session_id">Кому:</label>
+        <label x-ng-hide="message.mailfrom==user.session_id">От кого:</label>
+
+        <div>
+            <button x-ng-hide="message.mailfrom==user.session_id" class="btn-flat white"
+                    x-ng-click="answer(message.mailfrom)">Ответить
+            </button>
+            <button x-ng-hide="message.mailto==user.session_id" class="btn-flat white"
+                    x-ng-click="answer(message.message)">Переслать
+            </button>
+            <p>{{message.NameMO}}</p>
+
+        </div>
+    </div>
+    <div class="field-box">
+        <label>Текст сообщения:</span></label>
+
+        <div>
+            <p>
+                {{message.message}}
+            </p>
+        </div>
+    </div>
+
+    <button x-ng-click="close()" class="btn-flat">Закрыть</button>
+</div>

@@ -1,0 +1,35 @@
+<button class="btn-flat pull-right" x-ng-click="answer()">Написать сообщение</button>
+<h3>Сообщения</h3>
+
+<div class="alert alert-info " x-ng-show="user.messages.length ==0">
+    <i class="icon-exclamation-sign"></i> Нет сообщений
+</div>
+
+<table class="table mail table-hover table-striped">
+
+    <tbody>
+    <tr x-ng-repeat="record in user.messages" x-ng-class="getClass(record)">
+        <td x-ng-click="openMsg(record)"><i x-ng-show="record.mailfrom == user.session_id" class="icon-signout"></i>
+            <i x-ng-show="record.mailto == user.session_id" class="icon-signin"></i></td>
+        <td>
+            <i class="icon-envelope"></i>
+            <i class="icon-envelope-alt"></i>
+        </td>
+        <td x-ng-click="openMsg(record)">{{record.createdate | date:'HH:mm dd.MM'}}</td>
+        <td x-ng-click="openMsg(record)">{{record.NameMO}}</td>
+        <td x-ng-click="openMsg(record)">{{record.message}}</td>
+
+        <td>
+            <ul class="actions">
+                <li>
+                    <a x-ng-href="">
+                        <i x-ng-click="answer(record.mailfrom)"
+                           class="icon-mail-reply"></i>
+                    </a>
+                </li>
+            </ul>
+        </td>
+    </tr>
+
+    </tbody>
+</table>

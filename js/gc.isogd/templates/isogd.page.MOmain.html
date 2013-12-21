@@ -1,0 +1,205 @@
+<!--<h3>Информация о муниципальном образовании</h3>-->
+<div class="clearfix">
+    <div class="infoM infB ">
+        <div class="clearfix center">
+            <div id="paper"></div>
+
+            <!--рядом с картой-->
+
+            <h3 style="margin: 0 0 10px 0">{{MO.NameMO}}</h3>
+
+            <!--<div>{{MO.TipMO}}</div>-->
+            <h3 class="name"><span>Глава муниципального образования</span>{{MO.HeadMunicipality}}</h3>
+
+            <div>
+                <span>Сайт:</span>
+                <a x-ng-href="http://{{MO.Site}}" target="_blank">{{MO.Site}}</a>
+            </div>
+        </div>
+    </div>
+    <div class=" infoM infB">
+        <div>
+
+            <table class="table table-hover table-striped">
+                <thead class="col">
+                <tr>
+                    <th>Общая информация</th>
+                    <th>
+                        <span class="line"></span>
+                        <a class="btn-flat" href="#/mo/form/maininfo/"><i class="icon-pencil"></i>
+                            Редактировать</a>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Кадастровый номер муниципального образования</td>
+                    <td>{{MO.CadastrNumber}}</td>
+                </tr>
+                <tr x-ng-show="MO.TipMO!='Муниципальный район'">
+                    <td>Принадлежность к муниципальному району (только для поселений)</td>
+                    <td>{{MO.BelongingMunicipality}}</td>
+                </tr>
+                <tr>
+                    <td>Площадь муниципального образования</td>
+                    <td>{{MO.MunicipalityArea}} км²</td>
+                </tr>
+                <tr>
+                    <td>Численность населения</td>
+                    <td>{{MO.QuantityPopulation}} тыс.чел.</td>
+                </tr>
+                <tr>
+                    <td>Наименования структурного подразделения, уполномоченного в области архитектуры и
+                        градостроительства
+                    </td>
+                    <td>{{MO.NameStructuralDivision}}</td>
+                </tr>
+                <tr>
+                    <td>Руководитель структурного подразделения, уполномоченного в области архитектуры и
+                        градостроительства
+                    </td>
+                    <td>{{MO.HeadStructuralDivision}}</td>
+                </tr>
+                <tr>
+                    <td>Телефон руководителя структурного подразделения, уполномоченного в области архитектуры и
+                        градостроительства
+                    </td>
+                    <td>{{MO.Telefone}}</td>
+                </tr>
+                <tr>
+                    <td>Адрес электронной почты структурного подразделения, уполномоченного в области архитектуры и
+                        градостроительства
+                    </td>
+                    <td>{{MO.Email}}</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h3 style="clear: both;">Оперативная информация</h3>
+
+    <div class="infB">
+        <div>
+            <h5>Увеличение общего объема поступлений в бюджет МО за {{year}} год (тыс.руб.)</h5>
+
+            <div id="chartVolumeMeansMO" chart x-ng-model="chartVolumeMeansMO" class="chart"></div>
+        </div>
+    </div>
+    <div class="infB">
+        <div>
+            <h5>Поступления в бюджет МО в {{year}} году (тыс.руб.)</h5>
+
+            <div id="chartIncrementMO" chart x-ng-model="chartIncrementMO" class="chart"></div>
+        </div>
+    </div>
+    <div class="infB">
+        <div>
+            <h5>Увеличение количества фактов предоставления сведений отделом ведения ИСОГД</h5>
+
+            <div id="chartQuantityFactsGrantingDataMO" chart x-ng-model="chartQuantityFactsGrantingDataMO"
+                 class="chart"></div>
+        </div>
+    </div>
+    <div class="infB">
+        <div>
+            <h5>Количество фактов предоставления сведений ИСОГД за текущий год</h5>
+
+            <div id="chartQuantityFactsGrantingDataPieMO" chart x-ng-model="chartQuantityFactsGrantingDataPieMO"
+                 class="chart pie"></div>
+        </div>
+    </div>
+    <div class="infB">
+        <div>
+            <h5>Количество фактов предоставления сведний ИСОГД</h5>
+
+            <div id="chartQuantityFactsGrantingDataIncrementMO1" chart
+                 x-ng-model="chartQuantityFactsGrantingDataIncrementMO1"
+                 class="chart"></div>
+        </div>
+    </div>
+    <div class="infB">
+        <div>
+            <h5>Количество фактов предоставления копии одного документа ИСОГД</h5>
+
+            <div id="chartQuantityFactsGrantingDataIncrementMO2" chart
+                 x-ng-model="chartQuantityFactsGrantingDataIncrementMO2"
+                 class="chart"></div>
+        </div>
+    </div>
+</div>
+<h4><a x-ng-href="#/check/">Контроль данных</a></h4>
+<div style="padding: 20px 0 0 0;">
+    <table class="table table-hover table-striped">
+        <thead class="col">
+        <tr>
+            <th>
+                №
+            </th>
+            <th>
+                <span class="line"></span>
+                Дата изменения
+            </th>
+
+            <th>
+                <span class="line"></span>
+                Объем средств, полученных бюджетом МО
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов
+                предоставления сведений без взимания платы
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов
+                предоставления сведений с взиманием платы
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов
+                предоставления копии одного документа без взимания платы
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов
+                предоставления копии одного документа с взиманием платы
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов отказа
+            </th>
+            <th>
+                <span class="line"></span>Неоплаченные заявки
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody class="fkeep">
+        <tr x-ng-repeat="record in isogd.isogdWeek">
+            <td>{{$index+1}}</td>
+            <td>{{record.data}}</td>
+            <td>{{record.VolumeMeans}}</td>
+            <td>{{record.QuantityFactsGrantingData1}}</td>
+            <td>{{record.QuantityFactsGrantingData2}}</td>
+            <td>{{record.QuantityFactsGrantingData3}}</td>
+            <td>{{record.QuantityFactsGrantingData4}}</td>
+            <td>{{record.denials}}</td>
+            <td>{{record.unpaidRequests}}</td>
+            <td>
+                <ul class="actions" x-ng-hide="$index == 0">
+                    <li>
+                        <a x-ng-click="openDialog(record.week)">
+                            <i class="icon-pencil"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="actions" x-ng-show="$index == 0">
+                    <li>
+                        <a x-ng-href="#/mo/form/isogd/?tabisogd=data">
+                            <i class="icon-pencil"></i>
+                        </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+

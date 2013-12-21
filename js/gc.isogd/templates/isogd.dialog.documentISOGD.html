@@ -1,0 +1,69 @@
+<div>
+    <form name="form" x-ng-submit="close(document)">
+        <h3>Реквизиты документа</h3>
+
+        <div class="field-box">
+            <label>Наименование документа<span>устанавливающего плату за предоставление сведений ИСОГД</span></label>
+
+            <div><input required x-ng-model="document.NameDocumentPayment" type="text"></div>
+        </div>
+        <div class="field-box">
+            <label>Номер документа<span>устанавливающего плату за предоставление сведений ИСОГД</span></label>
+
+            <div><input required x-ng-model="document.NumberDocumentPayment" type="text"></div>
+        </div>
+        <div class="field-box">
+            <label>Дата документа<span>устанавливающего плату за предоставление сведений ИСОГД</span></label>
+
+            <div><input required x-ng-model="document.DateDocumentPayment" type="date"></div>
+        </div>
+        <div class="field-box">
+            <label>Размер платы за предоставление
+                сведений<span>содержащихся в одном разделе ИСОГД (физ. лицо), руб.</span></label>
+
+            <div><input required name="SizePayment1" x-ng-model="document.SizePayment1" type="text"
+                        x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
+                <span class="label1 label-important" x-ng-hide="form.SizePayment1.$valid"><i class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+
+        </div>
+        <div class="field-box">
+            <label>Размер платы за предоставление
+                сведений<span>содержащихся в одном разделе ИСОГД (юр. лицо), руб.</span></label>
+
+            <div><input required name="SizePayment2" x-ng-model="document.SizePayment2" type="text"
+                        x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
+
+                <span class="label1 label-important" x-ng-hide="form.SizePayment2.$valid"><i class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+        </div>
+        <div class="field-box">
+            <label>Размер платы за предоставление копии одного
+                документа<span>содержащегося в ИСОГД (физ. лицо), руб.</span></label>
+
+            <div><input required name="SizePayment3" x-ng-model="document.SizePayment3" type="text"
+                        x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
+                <span class="label1 label-important" x-ng-hide="form.SizePayment3.$valid"><i class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+        </div>
+        <div class="field-box">
+            <label>Размер платы за предоставление копии одного
+                документа<span>содержащегося в ИСОГД (юр. лицо), руб.</span></label>
+
+            <div><input required name="SizePayment4" x-ng-model="document.SizePayment4" type="text"
+                        x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
+                <span class="label1 label-important" x-ng-hide="form.SizePayment4.$valid"><i class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+
+        </div>
+        <button x-ng-click="close()" class="btn-flat danger">Отмена</button>
+
+        <input class="btn-flat" x-ng-disabled="form.$invalid" type="submit" value="СОХРАНИТЬ">
+
+
+    </form>
+</div>

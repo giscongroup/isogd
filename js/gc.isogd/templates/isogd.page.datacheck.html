@@ -1,0 +1,79 @@
+<input class="btn-flat vert" type="button" value="Добавить/изменить" x-ng-click="openDialog()">
+
+<div x-ng-show="saveError" class="alert alert-error woutm">
+    <i class="icon-remove-sign"></i> Ошибка! Данные не сохранены
+</div>
+<div x-ng-show="saveSuccess" class="alert alert-success woutm">
+    <i class="icon-ok-sign"></i> Данные успешно сохранены
+</div>
+<ul class="nav nav-tabs">
+    <li x-ng-class="getClass(year)" x-ng-repeat="year in years">
+        <a x-ng-href="#/check/?year={{year}}">{{year}}
+        </a>
+    </li>
+</ul>
+
+
+<div>
+    <table class="table table-hover table-striped">
+        <thead class="col">
+        <tr>
+            <th>
+                №
+            </th>
+            <th>
+                <span class="line"></span>
+                Дата изменения
+            </th>
+
+            <th>
+                <span class="line"></span>
+                Объем средств, полученных бюджетом МО
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов
+                предоставления сведений без взимания платы
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов
+                предоставления сведений с взиманием платы
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов
+                предоставления копии одного документа без взимания платы
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов
+                предоставления копии одного документа с взиманием платы
+            </th>
+            <th>
+                <span class="line"></span>Количество фактов отказа
+            </th>
+            <th>
+                <span class="line"></span>Неоплаченные заявки
+            </th>
+
+            <th></th>
+        </tr>
+        </thead>
+        <tbody class="fkeep">
+
+        <tr x-ng-repeat="record in isogd.isogdWeek">
+            <td>{{$index+1}}</td>
+            <td>{{record.data}}</td>
+            <td>{{record.VolumeMeans}}</td>
+            <td>{{record.QuantityFactsGrantingData1}}</td>
+            <td>{{record.QuantityFactsGrantingData2}}</td>
+            <td>{{record.QuantityFactsGrantingData3}}</td>
+            <td>{{record.QuantityFactsGrantingData4}}</td>
+            <td>{{record.denials}}</td>
+            <td>{{record.unpaidRequests}}</td>
+            <td>
+                <ul class="actions" x-ng-hide="$index == 0 && activeTab == currentYear">
+                    <li><i class="icon-pencil" x-ng-click="openDialog(record.week)"></i></li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

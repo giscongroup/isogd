@@ -1,0 +1,282 @@
+<h3>Оперативная информация</h3>
+
+<div>
+
+    <div class="res clearfix">
+        <div>
+            На <span>{{period}}.{{month}}.{{year}}</span> высокие результаты использования сведений ИСОГД показали
+            муниципальные
+            образования:
+            <!--<span>{{conclusion.bestMOinThisYear}}</span>-->
+            <ul>
+                <li x-ng-repeat="mo in conclusion.bestMOinThisYear">
+                    {{mo}},
+                </li>
+            </ul>
+
+            где в результате деятельности ИСОГД местные бюджеты в <span>{{year}} году</span>
+            были
+            пополнены в общей
+            сложности на <span>{{conclusion.sumByBestMOinThisYear}} тыс. рублей</span>, при совокупном объеме средств,
+            полученных
+            бюджетами муниципальных
+            образований Краснодарского края за предоставление сведений ИСОГД <span>{{conclusion.sumByThisYear}}
+            тыс. рублей</span>.
+        </div>
+
+        <div>
+            За аналогичный период предыдущего года высокие результаты использования сведений ИСОГД показали
+            муниципальные
+            образования:
+            <!--<span>{{conclusion.bestMOinPreviousYearSamePeriod}}</span>-->
+            <ul>
+                <li x-ng-repeat="mo in conclusion.bestMOinPreviousYearSamePeriod">
+                    {{mo}},
+                </li>
+            </ul>
+            где в результате деятельности ИСОГД местные
+            бюджеты в
+            <span> {{year-1}} году</span> были пополнены в общей
+            сложности на <span>{{conclusion.sumByBestMOinPreviousYearSamePeriod}} тыс. рублей</span>, при совокупном
+            объеме средств,
+            полученных бюджетами муниципальных
+            образований Краснодарского края за предоставление сведений ИСОГД <span>{{conclusion.sumByPreviousYearSamePeriod}}
+            тыс. рублей</span>.
+        </div>
+
+        <div>
+            За <span>{{year-1}} год</span> высокие результаты использования сведений ИСОГД показали муниципальные
+            образования:
+            <!--<span>{{conclusion.bestMOinPreviousYear}}</span>-->
+            <ul>
+                <li x-ng-repeat="mo in conclusion.bestMOinPreviousYear">
+                    {{mo}},
+                </li>
+            </ul>
+            где в результате деятельности ИСОГД местные бюджеты в
+            <span>{{year-1}} году</span>
+            были пополнены в
+            общей
+            сложности на <span>{{conclusion.sumByBestMOinPreviousYear}} тыс. рублей</span>, при совокупном объеме
+            средств, полученных
+            бюджетами
+            муниципальных
+            образований Краснодарского края за предоставление сведений ИСОГД <span>{{conclusion.sumByPreviousYear}} тыс.
+            рублей</span>.
+        </div>
+    </div>
+
+</div>
+
+<div class="clearfix">
+    <div class="infB">
+        <div>
+            <h5>Увеличение общего объема поступлений в бюджет за {{year}} год (тыс.руб.)</h5>
+
+            <div id="chartVolumeMeans" chart x-ng-model="chartVolumeMeans"
+                 class="chart"></div>
+        </div>
+    </div>
+    <div class="infB">
+        <div>
+            <h5>Поступления в бюджеты МО в {{year}} году (тыс.руб.)</h5>
+
+            <div id="chartIncrement" chart x-ng-model="chartIncrement"
+                 class="chart"></div>
+        </div>
+    </div>
+
+    <div class="infB">
+        <div>
+            <h5>Диаграмма показателей эффективности за {{year}} год</h5>
+            <!--<h5>Объем средств полученных бюджетом MO положительный: {{areaColor.greenarea}}</h5>-->
+            <!--<h5>Объем средств полученных бюджетом MO нулевой, количество фактов предоставления сведений больше нуля:-->
+            <!--{{areaColor.yellowarea}}</h5>-->
+
+            <!--<h5>Объем средств полученных бюджетом MO нулевой, количество фактов предоставления сведений ноль:-->
+            <!--{{areaColor.redarea}}</h5>-->
+
+            <div id="areastat" chart x-ng-model="areastat"
+                 class="chart pie"></div>
+        </div>
+    </div>
+    <div class="infB">
+        <div>
+            <h5>Количество фактов предоставления сведений за {{year}} год</h5>
+
+            <div id="chartQuantityFactsGrantingDataPie" chart x-ng-model="chartQuantityFactsGrantingDataPie"
+                 class="chart pie"></div>
+        </div>
+    </div>
+</div>
+<!--<div style="height:500px; width:60%;" google-chart chart="chart_main_admin_page"></div>-->
+
+<!--<div class="row">-->
+<!--<ul class="nav nav-tabs" tabset>-->
+<!--<li class="active">-->
+<!--<a href="#">Последние изменения</a>-->
+<!--</li>-->
+<!--<li>-->
+<!--<a href="#">Не отчитавшиеся</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--<div class="tab-content">-->
+<!--<div class="tab-pane"></div>-->
+<!--<div class="tab-pane"></div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<ul class="nav nav-tabs otst">
+    <li x-ng-class="getClass('updates')">
+        <a x-ng-href="#/main/?tabmain=updates">Последние изменения </a>
+    </li>
+    <li x-ng-class="getClass('dontReport')">
+        <a x-ng-href="#/main/?tabmain=dontReport">Не отчитавшиеся <b>({{dontReportMO.length}})</b> </a>
+    </li>
+</ul>
+
+
+<div x-ng-switch on="activeTab">
+    <div x-ng-switch-when='updates'>
+
+        <h4>Последние изменения</h4>
+
+        <table class="table table-hover table-striped">
+            <thead class="col">
+            <tr>
+                <th>
+                    №
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Дата изменения
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Муниципальное образование
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Объем средств, полученных бюджетом МО
+                </th>
+                <th>
+                    <span class="line"></span>Количество фактов
+                    предоставления сведений без взимания платы
+                </th>
+                <th>
+                    <span class="line"></span>Количество фактов
+                    предоставления сведений с взиманием платы
+                </th>
+                <th>
+                    <span class="line"></span>Количество фактов
+                    предоставления копии одного документа без взимания платы
+                </th>
+                <th>
+                    <span class="line"></span>Количество фактов
+                    предоставления копии одного документа с взиманием платы
+                </th>
+                <th>
+                    <span class="line"></span>Количество фактов отказа
+                </th>
+                <th>
+                    <span class="line"></span>Неоплаченные заявки
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr x-ng-repeat="record in lastUpdates">
+                <td>{{$index+1}}</td>
+                <td>{{record.CreateDate}}</td>
+                <td><a x-ng-href="#/graph/mo/?idmo={{record.ID}}">{{record.NameMO}}</a></td>
+                <td>{{record.VolumeMeans}}</td>
+                <td>{{record.QuantityFactsGrantingData1}}</td>
+                <td>{{record.QuantityFactsGrantingData2}}</td>
+                <td>{{record.QuantityFactsGrantingData3}}</td>
+                <td>{{record.QuantityFactsGrantingData4}}</td>
+                <td>{{record.denials}}</td>
+                <td>{{record.unpaidRequests}}</td>
+                <td>
+                    <ul class="actions">
+                        <li x-ng-click="openDialog(record, record.CreateDate)">
+                            <a x-ng-href="">
+                                <i class="icon-warning-sign"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a x-ng-href="#/graph/mo/?idmo={{record.ID}}">
+                                <i class="icon-info"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div x-ng-switch-when='dontReport'>
+
+        <h4>Не отчитавшиеся</h4>
+
+        <table class="table table-hover table-striped">
+            <thead class="col">
+            <tr>
+                <th>
+                    №
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Муниципальное образование
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Ответственный за ведение ИСОГД
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Номер телефона рабочий
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Номер телефона мобильный
+                </th>
+                <th>
+                    <span class="line"></span>
+                    Адрес электронной почты
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr x-ng-repeat="record in dontReportMO">
+                <td>{{$index+1}}</td>
+                <td><a x-ng-href="#/graph/mo/?idmo={{record.ID}}">{{record.NameMO}}</a></td>
+                <td>{{record.Executor}}</td>
+                <td>{{record.Telefone1}}</td>
+                <td>{{record.Telefone2}}</td>
+                <td>{{record.email}}
+                </td>
+                <td>
+                    <ul class="actions">
+                        <li x-ng-click="openDialog(record)">
+                            <a x-ng-href="">
+                                <i class="icon-warning-sign"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a x-ng-href="#/graph/mo/?idmo={{record.ID}}">
+                                <i class="icon-info"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
