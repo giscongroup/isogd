@@ -260,7 +260,7 @@
     }]);
 
 
-    gp.controller('isogd.page.main', [ '$rootScope', '$user', '$location', '$isogdData', '$dialog', function ($rootScope, $user, $location, $isogdData, $dialog) {
+    gp.controller('isogd.page.main', [ '$rootScope', '$user', '$location', '$isogdData', '$dialog', '$http', function ($rootScope, $user, $location, $isogdData, $dialog, $http) {
 
         $rootScope.monthArray = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
         $rootScope.location = $location;
@@ -376,6 +376,16 @@
             $location.path('/login/');
         };
 
+        $rootScope.exportMDB = function () {
+
+            var promise = $http.get('js/gc.isogd/isogd.fn.exportmdb.php');
+            promise.success(function (data) {
+                console.log(data);
+            });
+            promise.error(function (data) {
+                console.log(data);
+            });
+        };
 
     }])
 
