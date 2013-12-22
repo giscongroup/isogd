@@ -5,10 +5,10 @@
  * Time: 9:08
  * Description:
  */
-$dbString = "mysql:host=gs.sktisiz.ru;dbname=isogd;port=3306;";
-$dbUser = "user";
-$dbPass = 'Riacddb2RF';
-
-//$dbString = "mysql:host=192.168.6.41;dbname=isogd;port=3306;";
+//$dbString = "mysql:host=gs.sktisiz.ru;dbname=isogd;port=3306;";
 //$dbUser = "user";
-//$dbPass = 'VplFFP';
+//$dbPass = 'Riacddb2RF';
+
+$dbString = "mysql:host=192.168.6.52;dbname=isogd;port=3306;";
+$dbUser = "user";
+$dbPass = 'VplFFP';

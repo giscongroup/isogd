@@ -19,8 +19,8 @@
         gp = _win.geoportalInstance;
 
     gp.controller('isogd.page.login', [ '$scope', '$http', '$user', '$location', '$pathToReturn', '$isogdData', function ($scope, $http, $user, $location, $pathToReturn, $isogdData) {
-//        $scope.login = "Polkvoy";
-//        $scope.password = "921";
+        $scope.login = "Polkvoy";
+        $scope.password = "921";
 
         $scope.process = '';
 
@@ -28,8 +28,8 @@
 
         $scope.isogd = $isogdData.isogd;
 
-//        $scope.login = "3657000W6";
-//        $scope.password = "N1d4G5f5";
+        $scope.login = "3657000W6";
+        $scope.password = "N1d4G5f5";
 //
 //        $scope.login = "3655000T3";
 //        $scope.password = "K5M0g7M3";
@@ -141,76 +141,9 @@
         };
 
         $scope.getstat = function () {
-            var lastUpdate = new Date('1900-08-15T05:21:17.437Z'),
-                lastMonthUpdate = new Date('1900-08-15T05:21:17.437Z'),
+            var
                 today = new Date(),
-                lastMonthDate = new Date(),
-                data = undefined,
-                sumByYear = 0,
-                sumByMonth = 0,
-                month = today.getMonth(),
-                MOlastMonthUpdate = {},
-                updatesInLastMonth = [];
-
-            lastMonthDate.setDate(today.getDate() - 30);
-
-            if ($isogdData.isogd.alldata !== undefined) {
-                for (var i = 0, max = $isogdData.isogd.alldata.length; i < max; i++) {
-                    data = new Date($isogdData.isogd.alldata[i].CreateDate);
-                    if (lastUpdate < data) {
-                        lastUpdate = data;
-                    }
-                    if (today.getMonth() === data.getMonth()) {
-                        updatesInLastMonth.push($isogdData.isogd.alldata[i].ID);
-                    }
-                }
-            }
-
-            if ($isogdData.isogd.isogdWeek !== undefined) {
-                for (var i = 0, max = $isogdData.isogd.isogdWeek.length; i < max; i++) {
-                    data = new Date($isogdData.isogd.isogdWeek[i].week);
-
-
-                    if (today.getMonth() - 1 == data.getMonth() && data.getDate() > 15) {
-                        lastMonthUpdate = data;
-                        sumByMonth = $isogdData.isogd.isogdWeek[i].VolumeMeans;
-
-                        if (MOlastMonthUpdate[$isogdData.isogd.isogdWeek[i].ID] === undefined && $isogdData.isogd.isogdWeek[i].VolumeMeans !== undefined) {
-                            MOlastMonthUpdate[$isogdData.isogd.isogdWeek[i].ID] = {};
-                            MOlastMonthUpdate[$isogdData.isogd.isogdWeek[i].ID].week = data;
-                            MOlastMonthUpdate[$isogdData.isogd.isogdWeek[i].ID].VolumeMeans = $isogdData.isogd.isogdWeek[i].VolumeMeans;
-                        }
-                        else {
-                            if ($isogdData.isogd.isogdWeek[i].VolumeMeans !== undefined) {
-                                MOlastMonthUpdate[$isogdData.isogd.isogdWeek[i].ID].week = data;
-                                MOlastMonthUpdate[$isogdData.isogd.isogdWeek[i].ID].VolumeMeans = $isogdData.isogd.isogdWeek[i].VolumeMeans;
-                            }
-                        }
-                    }
-                }
-            }
-
-            sumByMonth = 0;
-            _.each(MOlastMonthUpdate, function (obj) {
-                sumByMonth = sumByMonth + obj.VolumeMeans;
-            });
-
-
-            if ($isogdData.isogd.lastdata !== undefined) {
-                for (i = 0, max = $isogdData.isogd.lastdata.length; i < max; i++) {
-                    if ($isogdData.isogd.lastdata[i].VolumeMeans !== undefined)
-                        sumByYear = sumByYear + parseFloat($isogdData.isogd.lastdata[i].VolumeMeans);
-                }
-            }
-
-
-            $isogdData.stat.lastupdate = lastUpdate;
-            $isogdData.stat.numberOfRecord = $isogdData.isogd.isogdLog.length;
-            $isogdData.stat.sumByYear = sumByYear;
-            $isogdData.stat.sumByMonth = sumByYear - sumByMonth;
-            $isogdData.stat.updatesCount = updatesInLastMonth.length;
-            $isogdData.stat.updatesUserCount = (_.uniq(updatesInLastMonth)).length;
-            $isogdData.stat.userCount = $isogdData.MO.length;
+                month = today.getMonth();
 
             $isogdData.stat.year = today.getFullYear();
 
@@ -223,7 +156,7 @@
             promise.success(function (data) {
                 if (typeof(data) === 'object') {
                     _.each(data, function (value, name) {
-                        $isogdData.stat[name] = value;
+                        $isogdData.stat[name] = name === 'lastupdate' ? new Date(value) : value;
                     });
                 }
                 $scope.getColorArea();
@@ -232,8 +165,6 @@
                 console.log(data);
                 $scope.getColorArea();
             });
-
-
         };
 
         $scope.getColorArea = function () {

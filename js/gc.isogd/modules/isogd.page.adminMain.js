@@ -199,32 +199,6 @@
             if (mo !== undefined)
                 $scope.lastUpdates[i].NameMO = mo.NameMO;
         }
-//
-//        for (var i = 0, max = $scope.isogdByWeek.length; i < max; i++) {
-//            var dataArray = $scope.isogdByWeek[i].week.split('-'),
-//                data = dataArray[0] + '-' + dataArray[1];
-//
-//            if (dataArray[2] <= 15)
-//                data = data + '-01';
-//            else
-//                data = data + '-16';
-//
-//            if ($scope.sumByWeek[data] === undefined)
-//                $scope.sumByWeek[data] = {
-//                    VolumeMeans: 0,
-//                    QuantityFactsGrantingData1: 0,
-//                    QuantityFactsGrantingData2: 0,
-//                    QuantityFactsGrantingData3: 0,
-//                    QuantityFactsGrantingData4: 0
-//                };
-//
-//            $scope.sumByWeek[data].VolumeMeans = $scope.sumByWeek[data].VolumeMeans + $scope.isogdByWeek[i].VolumeMeans;
-//            $scope.sumByWeek[data].QuantityFactsGrantingData1 = $scope.sumByWeek[data].QuantityFactsGrantingData1 + $scope.isogdByWeek[i].QuantityFactsGrantingData1;
-//            $scope.sumByWeek[data].QuantityFactsGrantingData2 = $scope.sumByWeek[data].QuantityFactsGrantingData2 + $scope.isogdByWeek[i].QuantityFactsGrantingData2;
-//            $scope.sumByWeek[data].QuantityFactsGrantingData3 = $scope.sumByWeek[data].QuantityFactsGrantingData3 + $scope.isogdByWeek[i].QuantityFactsGrantingData3;
-//            $scope.sumByWeek[data].QuantityFactsGrantingData4 = $scope.sumByWeek[data].QuantityFactsGrantingData4 + $scope.isogdByWeek[i].QuantityFactsGrantingData4;
-//
-//        }
 
         _.each($scope.mo, function (mo) {
             var indx,
@@ -248,62 +222,6 @@
             }
         });
 
-//        $scope.sortdata = function (nameofcolumn, nameOfArray) {
-//            $scope[nameOfArray] = _.sortBy($scope[nameOfArray], function (element) {
-//                if (typeof element[nameofcolumn] === 'string')
-//                    return element[nameofcolumn].toLowerCase();
-//                else
-//                    return element[nameofcolumn]
-//            });
-//            if (sortMethod === 'sIncrease') {
-//                $scope[nameOfArray].reverse();
-//                sortMethod = 'sDecrease';
-//            }
-//            else if (sortMethod === 'sDecrease' || sortMethod === '') {
-//                sortMethod = 'sIncrease';
-//            }
-//        };
-        //////////////////////////графики //////////////////////////////////////////////////////////////////////////////
-//        var monthArray = ['янв', 'февр', 'март', 'апр', 'май', 'июнь',
-//                'июль', 'авг', 'сент', 'окт', 'нояб', 'дек'],
-//            volumeMeans = [],
-//            increment = [],
-//            labels = [],
-//            pie = {},
-//            lastWeek = '',
-//            keys = Object.keys($scope.sumByWeek),
-//            a = 1;
-//        keys.sort();
-//
-//        $scope.SumQuantityFactsGrantingData = {
-//            QuantityFactsGrantingData1: 0,
-//            QuantityFactsGrantingData2: 0,
-//            QuantityFactsGrantingData3: 0,
-//            QuantityFactsGrantingData4: 0
-//        };
-//
-//        _.each(keys, function (week) {
-//            volumeMeans.push([a, $scope.sumByWeek[week].VolumeMeans]);
-//
-//            if (a % 2 != 0)
-//                labels.push([a, monthArray[parseInt(week.split('-')[1]) - 1]]);
-//            else
-//                labels.push([a, '']);
-//
-//            if (lastWeek !== '') {
-//                $scope.SumQuantityFactsGrantingData.QuantityFactsGrantingData1 = $scope.SumQuantityFactsGrantingData.QuantityFactsGrantingData1 + $scope.sumByWeek[week].QuantityFactsGrantingData1;
-//                $scope.SumQuantityFactsGrantingData.QuantityFactsGrantingData2 = $scope.SumQuantityFactsGrantingData.QuantityFactsGrantingData2 + $scope.sumByWeek[week].QuantityFactsGrantingData2;
-//                $scope.SumQuantityFactsGrantingData.QuantityFactsGrantingData3 = $scope.SumQuantityFactsGrantingData.QuantityFactsGrantingData3 + $scope.sumByWeek[week].QuantityFactsGrantingData3;
-//                $scope.SumQuantityFactsGrantingData.QuantityFactsGrantingData4 = $scope.SumQuantityFactsGrantingData.QuantityFactsGrantingData4 + $scope.sumByWeek[week].QuantityFactsGrantingData4;
-//
-//                increment.push([a, $scope.sumByWeek[week].VolumeMeans - $scope.sumByWeek[lastWeek].VolumeMeans]);
-//            }
-//            else {
-//                increment.push([a, $scope.sumByWeek[week].VolumeMeans]);
-//            }
-//            lastWeek = week;
-//            a = a + 1;
-//        });
 
 
         var promise = $http.get('js/gc.isogd/isogd.srv.getGraphData.php');

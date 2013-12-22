@@ -16,24 +16,22 @@
 
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-responsive.min.css">
-    <link rel="stylesheet" href="js/wml.isogd/css/font-awesome.css">
-    <!--    <link rel="stylesheet" href="js/wml.isogd/css/css.min.css">-->
-    <link rel="stylesheet" href="js/wml.isogd/css/css.css">
+    <link rel="stylesheet" href="js/gc.isogd/css/font-awesome.css">
+    <link rel="stylesheet" href="js/gc.isogd/css/css.css">
 
     <script type="text/javascript" src="lib/underscore-min.js"></script>
-    <script type="text/javascript" src="js/wml.isogd/modules/raphael.js"></script>
+    <script type="text/javascript" src="js/gc.isogd/modules/raphael.js"></script>
 
-    <script type="text/javascript" src="lib/angular/angular.min.js"></script>
-    <script type="text/javascript" src="lib/angular/angular-route.min.js"></script>
-    <script type="text/javascript" src="lib/angular/angular-animate.min.js"></script>
-    <script type="text/javascript" src="lib/angular/angular-resource.min.js"></script>
+    <script type="text/javascript" src="lib/angular-1.2.5/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular-1.2.5/angular-route.min.js"></script>
+    <script type="text/javascript" src="lib/angular-1.2.5/angular-animate.min.js"></script>
+    <script type="text/javascript" src="lib/angular-1.2.5/angular-resource.min.js"></script>
 
     <script type="text/javascript" src="lib/ui-bootstrap-0.5.0.min.js"></script>
     <script type="text/javascript" src="lib/ui-bootstrap-tpls-0.5.0.min.js"></script>
 
-    <script type="text/javascript" src="js/wml.js"></script>
-    <!--    <script type="text/javascript" src="js/wml.isogd/wml.isogd.min.js"></script>-->
-    <script type="text/javascript" src="js/wml.isogd/wml.isogd.js"></script>
+    <script type="text/javascript" src="js/gc.js"></script>
+    <script type="text/javascript" src="js/gc.isogd/gc.isogd.js"></script>
 
     <script type="text/javascript" src="lib/mask.min.js"></script>
 
@@ -84,7 +82,7 @@
                 </ul>
             </li>
             <!--            <li><a><i class="icon-cog"></i></a></li>-->
-            <li><a x-ng-href="js/wml.isogd/guide/Руководство_пользователя.pdf" target="_blank">
+            <li><a x-ng-href="js/gc.isogd/guide/Руководство_пользователя.pdf" target="_blank">
 <!--                    <i class="icon-question"></i>-->
                     <span>Руководство пользователя</span></a></li>
         </ul>
@@ -99,7 +97,7 @@
 <div class="userid" x-ng-show="user.session_id != undefined">
 
 
-    <img width="50px" height="50px" class="uspic" src="js/wml.isogd/img/member_ph.png" title="">
+    <img width="50px" height="50px" class="uspic" src="js/gc.isogd/img/member_ph.png" title="">
 
     <p class="right" x-ng-show="user.manager == 1">Администратор</p>
 
@@ -352,27 +350,27 @@
 </div>
 
 
-<script type="text/javascript" src="js/wml.isogd/krasnodar_region_svg.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.directive.chart.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.resource.getdata.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.login.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.publicmap.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.formMainInfo.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.formISOGD.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.standards.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.table.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.MOstat.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.MOmain.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.graphVolumeMeans.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.adminMain.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.graphsByMO.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.dynamicParam.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.reports.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.datacheck.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.page.message.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.dialog.message.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.dialog.selectMO.js"></script>
-<script type="text/javascript" src="js/wml.isogd/modules/isogd.dialog.weekISOGD.js"></script>
+<script type="text/javascript" src="js/gc.isogd/krasnodar_region_svg.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.directive.chart.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.resource.getdata.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.login.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.publicmap.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.formMainInfo.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.formISOGD.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.standards.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.table.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.MOstat.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.MOmain.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.graphVolumeMeans.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.adminMain.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.graphsByMO.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.dynamicParam.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.reports.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.datacheck.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.page.message.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.dialog.message.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.dialog.selectMO.js"></script>
+<script type="text/javascript" src="js/gc.isogd/modules/isogd.dialog.weekISOGD.js"></script>
 
 
 </body>

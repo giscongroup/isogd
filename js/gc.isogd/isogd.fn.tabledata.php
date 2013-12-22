@@ -10,7 +10,6 @@
 function getdata($TABLE_NAME, $FIELDS = '*', $CONDITION = '')
 {
     try {
-//        $db = new PDO('sqlite:db/isogd.db');
         include 'isogd.db.param.php';
         $db = new PDO($dbString, $dbUser, $dbPass);
         $db->setAttribute(PDO::ATTR_ERRMODE,
@@ -39,7 +38,6 @@ function getdata($TABLE_NAME, $FIELDS = '*', $CONDITION = '')
                     }
                     $dummy[$k] = $v;
                 }
-
             }
             $arr[] = $dummy;
         }
