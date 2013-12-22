@@ -28,8 +28,8 @@
 
         $scope.isogd = $isogdData.isogd;
 
-        $scope.login = "3657000W6";
-        $scope.password = "N1d4G5f5";
+//        $scope.login = "3657000W6";
+//        $scope.password = "N1d4G5f5";
 //
 //        $scope.login = "3655000T3";
 //        $scope.password = "K5M0g7M3";

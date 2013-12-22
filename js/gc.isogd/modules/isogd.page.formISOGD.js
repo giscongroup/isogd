@@ -253,6 +253,7 @@
             });
             promise.error(function (data) {
                 console.log(data);
+                $scope.getColorArea();
             });
         };
 

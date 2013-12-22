@@ -14,16 +14,11 @@ if (isset($_SESSION['session_id'])) {
     include 'isogd.fn.tabledata.php';
     $result = array();
 
-    $stopYear = $_GET['year'] . "-12-31";
-    $startYear = $_GET['year'] . "-01-01";
-
-    $isogdWeek = getdata('isogdweek', '*', "WHERE ID = " . $_SESSION['session_id'] . " and week BETWEEN '" . $startYear . "' and '" . $stopYear . "' ORDER BY week");
+    $isogdWeek = getdata('isogdweek', '*', "WHERE ID = " . $_SESSION['session_id'] . " and week like '" . $_GET['year'] . "-%' ORDER BY week");
 
     if (gettype($isogdWeek) != "string") {
         $result = $isogdWeek;
     }
-
     echo json_encode($result);
-
 }
 ?>

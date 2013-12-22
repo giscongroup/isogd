@@ -48,8 +48,6 @@ if (isset($_SESSION['session_id'])) {
             $result['sumByMonth'] = $result['sumByYear'];
         }
 
-        $result['sumByLastMonth'] = $sumByLastMonth;
-
         echo json_encode($result);
     } else {
         $result = array();

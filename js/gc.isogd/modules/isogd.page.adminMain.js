@@ -69,7 +69,6 @@
 
         }
 
-
         $scope.sortisogd = _.sortBy($scope.isogdLastData, function (obj) {
             if (obj.VolumeMeans !== undefined)
                 return obj.VolumeMeans;

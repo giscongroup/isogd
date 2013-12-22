@@ -13,7 +13,7 @@ if (isset($_SESSION['session_id'])) {
     }
 
     $today = date("Y-m-d");
-    $startYear = date("Y") . "-01-01";
+    $startYear = date("Y") . "-01-00";
 
     $year = date("Y");
     $month = date("m");
@@ -34,11 +34,11 @@ if (isset($_SESSION['session_id'])) {
         $startMonth = date("Y-m") . "-01";
 
         $startMonthPY = ($year - 1) . "-" . $lastmonth . "-16";
-        $endMonthPY = ($year - 1) . "-" . $lastmonth . "-31";
+        $endMonthPY = ($year - 1) . "-" . $lastmonth . "-32";
 
     } else {
         $startMonth = date("Y-m") . "-16";
-        $startMonthPY = ($year - 1) . "-" . $lastmonth . "-01";
+        $startMonthPY = ($year - 1) . "-" . $lastmonth . "-00";
         $endMonthPY = ($year - 1) . "-" . $lastmonth . "-16";
     }
 
@@ -47,13 +47,14 @@ if (isset($_SESSION['session_id'])) {
     if ($_SESSION['session_adm'] == 1) {
 
         $isogd = getdata('isogd', 'isogd.*, MO.NameMO', 'JOIN MO on isogd.ID = MO.ID');
-        $isogdarch = getdata('isogdarch', '*', "WHERE CreateDate BETWEEN '" . $year . "-" . $month . "-01' AND '" . $today . "' ORDER BY CreateDate LIMIT 15;");
+        $isogdarch = getdata('isogdarch', '*', "WHERE CreateDate like '" . $year . "-%' ORDER BY CreateDate LIMIT 15;");
 
         $isogdByCurrentPeriod = getdata('isogdarch', '*', "WHERE CreateDate BETWEEN '" . $startMonth . "' AND '" . $today . "';");
 
-        $isogdWeek = getdata('isogdweek', '*', "WHERE week BETWEEN '" . $startYear . "' and '" . $today . "' ORDER BY week");
+        $isogdWeek = getdata('isogdweek', '*', "WHERE week like '" . $year . "-%' ORDER BY week");
 
-        $isogdPreviousYear = getdata('isogdweek', '*', "WHERE week BETWEEN '" . ($year - 1) . "-12-15' and '" . ($year - 1) . "-12-31'");
+        $previousWeek = getdata('isogdweek', 'week', "WHERE week like '" . ($year - 1) . "-%' ORDER BY week DESC LIMIT 1;");
+        $isogdPreviousYear = getdata('isogdweek', '*', "WHERE week = '" . $previousWeek[0]['week'] . "';");
         $isogdPreviousYearSamePeriod = getdata('isogdweek', '*', "WHERE week BETWEEN '" . $startMonthPY . "' and '" . $endMonthPY . "'");
 
         if (gettype($isogd) != "string") {
@@ -79,8 +80,8 @@ if (isset($_SESSION['session_id'])) {
     } else {
 
         $isogd = getdata('isogd', 'isogd.*, MO.NameMO', 'JOIN MO on isogd.ID = MO.ID WHERE isogd.ID = ' . $_SESSION['session_id']);
-        $isogdarch = getdata('isogdarch', '*', 'WHERE ID = ' . $_SESSION['session_id'] . " AND (CreateDate BETWEEN '" . $year . "-" . $lastmonth . "-01' AND '" . $today . "');");
-        $isogdWeek = getdata('isogdweek', '*', "WHERE ID = " . $_SESSION['session_id'] . " and week BETWEEN '" . $startYear . "' and '" . $currentWeek . "' ORDER BY week");
+        $isogdarch = getdata('isogdarch', '*', 'WHERE ID = ' . $_SESSION['session_id'] . " AND (CreateDate BETWEEN '" . $year . "-" . $lastmonth . "-00' AND '" . $today . "');");
+        $isogdWeek = getdata('isogdweek', '*', "WHERE ID = " . $_SESSION['session_id'] . " and week like '" . $year . "-%' ORDER BY week");
 
         $isogdByCurrentPeriod = getdata('isogdarch', '*', "WHERE CreateDate BETWEEN '" . date("Y-m") . "-00" . "' AND '" . $today . "' and ID = " . $_SESSION['session_id'] . ";");
 

@@ -58,8 +58,8 @@
 
 
 //    baseMods.push('wml.touch');
-    baseMods.push('eventModule');
-    baseMods.push('wml.chain');
+//    baseMods.push('eventModule');
+//    baseMods.push('wml.chain');
     baseMods.push('ui.bootstrap');
     baseMods.push('ngRoute');
     baseMods.push('ngAnimate');
