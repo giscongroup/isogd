@@ -96,7 +96,7 @@
             _.each($scope.isogd.isogdWeek, function (isogd) {
                 //var week = isogd.week.split('-');
                 //isogd.data = week[2] + ' ' + monthArray[week[1] - 1];
-                isogd.data = phaseArray[isogd.phase - 1];
+                isogd.data = phaseArray[isogd.phase.split('-')[1] - 1];
             });
 
             $scope.isogd.isogdWeek.reverse();
@@ -122,7 +122,6 @@
             $pathParams.phase = phase;
 
             d.open().then(function (result) {
-
                 if (result !== undefined) {
                     dProcess.open();
                     result.CreateDate = new Date();

@@ -18,16 +18,13 @@
     gp.controller('isogd.dialog.weekCntr', ['$scope', 'dialog', '$pathParams', '$isogdData', '$location', 'msg', function ($scope, dialog, $pathParams, $isogdData, $location, msg) {
         var today = new Date(),
             maxyeardate = $pathParams.year == today.getFullYear() ? new Date() : new Date($pathParams.year, 11, 31),
-            halfCount = 2,
+            halfCount,
             maxmonth, date, year;
 
         $scope.path = $location.path();
         $scope.monthArray = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь',
             'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
 
-
-        $pathParams.phase === undefined && ($pathParams.phase = '1');
-        $scope.activeTab = $pathParams.phase;
 
         if ($pathParams.year == today.getFullYear()) {
             maxmonth = today.getMonth();
@@ -40,6 +37,9 @@
             year = $pathParams.year
         }
 
+        $pathParams.phase === undefined && ($pathParams.phase = year + '-1');
+        $scope.activeTab = $pathParams.phase;
+
         $scope.year = year;
 
         $scope.twoWeeks = [];
@@ -49,8 +49,18 @@
 
         $scope.isogdByWeek = {};
 
-        halfCount = date < 16 ? 0 : 1;
+        //halfCount = date < 16 ? 0 : 1;
 
+        if ($pathParams.year == today.getFullYear()) {
+            if (date < 16) {
+                halfCount = 1;
+                maxmonth += -1;
+            }
+            else {
+                halfCount = 2;
+                maxmonth += -1;
+            }
+        }
         for (var i = 0, max = maxmonth; i <= max; i++) {
             var maxHalf = 2;
 
@@ -61,17 +71,19 @@
             for (var half = 0; half < maxHalf; half++) {
                 if (half === 0) {
                     var
+                        phase = $pathParams.year + '-' + ((i + 1) * 2 - 1),
                         isogd = _.find($scope.isogd.isogdWeek, function (el) {
-                            return parseInt(el.phase) === ((i + 1) * 2) - 1;
+                            return el.phase === phase;
                         });
-                    var phase = ((i + 1) * 2) - 1;
+
+
                     $scope.isogdByWeek[phase] = isogd !== undefined ? isogd : {phase: phase};
                     week.halfs.push(phase);
                 }
                 else {
-                    phase = (i + 1) * 2;
+                    phase = $pathParams.year + '-' + (i + 1) * 2;
                     isogd = _.find($scope.isogd.isogdWeek, function (el) {
-                        return parseInt(el.phase) === (i + 1) * 2;
+                        return el.phase === phase;
                     });
 
                     $scope.isogdByWeek[phase] = isogd !== undefined ? isogd : {phase: phase};
