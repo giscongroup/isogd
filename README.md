@@ -1,4 +1,0 @@
-isogd
-=====
-
-Isogd project

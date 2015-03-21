@@ -338,7 +338,6 @@
         };
 
         $scope.getstat = function () {
-
             var promise = $http.get('js/gc.isogd/isogd.srv.getStat.php');
             promise.success(function (data) {
                 if (typeof(data) === 'object') {
@@ -352,8 +351,6 @@
                 console.log(data);
                 $scope.getColorArea();
             });
-
-
         };
 //        $scope.chart_bar_by_MO_VolumeMeans = {
 //            "type": "LineChart",

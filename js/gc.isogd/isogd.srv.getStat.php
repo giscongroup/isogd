@@ -14,19 +14,19 @@ if (isset($_SESSION['session_id'])) {
         $result = array();
         $today = date("Y-m") . '-' . $year = date("d") + 1;
 
-        $year = date("Y");
-        $month = date("m");
+          $year = date("Y");
+    $month = date("m");
 
-        $lastmonth = $month - 1;
+    $lastmonth = $month - 1;
 
+    if ($month < 10)
+        $month = '0' . $month;
 
-        if ($lastmonth < 10)
-            $lastmonth = '0' . $lastmonth;
-        if ($month < 10)
-            $month = '0' . $month;
+    if ($lastmonth < 10)
+        $lastmonth = '0' . $lastmonth;
 
         $updatesCount = getdata('isogdarch', 'count(Code) as count', "WHERE CreateDate BETWEEN '" . $year . "-" . $month . "-00' AND '" . $today . "';");
-        $sumByYear = getdata('isogd', 'sum(VolumeMeans) as sum');
+        $sumByYear = getdata('isogd', 'ROUND(sum(VolumeMeans),1) as sum');
         $previousWeek = getdata('isogdweek', 'week', "WHERE week < '" . $year . "-" . $month . "-00" . "' ORDER BY week DESC LIMIT 1;");
         $sumByLastMonth = getdata('isogdweek', 'sum(VolumeMeans) as sum', "WHERE week LIKE '" . $previousWeek[0]['week'] . "';");
         $updatesUserCount = getdata('isogdarch', 'count(DISTINCT ID) as count', "WHERE CreateDate BETWEEN '" . $year . "-" . $month . "-00' AND '" . $today . "';");
@@ -53,14 +53,18 @@ if (isset($_SESSION['session_id'])) {
         $result = array();
         $today = date("Y-m") . '-' . $year = date("d") + 1;
         $year = date("Y");
-        $month = date("m");
+       
+    $month += date("m");
+  
 
-        $lastmonth = $month - 1;
+    $lastmonth = $month - 1;
 
-        if ($lastmonth < 10)
-            $lastmonth = '0' . $lastmonth;
-        if ($month < 10)
-            $month = '0' . $month;
+    if ($month < 10)
+        $month = '0' . $month;
+
+    if ($lastmonth < 10)
+        $lastmonth = '0' . $lastmonth;
+
 
         $lastUpdate = getdata('isogdarch', 'CreateDate', "WHERE ID = " . $_SESSION['session_id'] . " ORDER BY CreateDate DESC LIMIT 1;");
         $updatesCount = getdata('isogdarch', 'count(Code) as count', "WHERE CreateDate BETWEEN '" . $year . "-" . $month . "-00' AND '" . $today . "' AND ID = " . $_SESSION['session_id'] . ";");

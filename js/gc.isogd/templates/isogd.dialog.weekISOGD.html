@@ -3,14 +3,14 @@
     <div class="tabbable tabs-left">
         <ul class="nav nav-tabs">
             <li class="" x-ng-repeat="month in twoWeeks">
-                <a class="dropdown-switch" x-ng-href="#{{path}}?week={{month.halfs[0]}}">{{month.monthName}}</a>
+                <a class="dropdown-switch" x-ng-href="#{{path}}?phase={{month.halfs[0]}}">{{month.monthName}}</a>
 
                 <ul class="dropdown-menu">
                     <li x-ng-class="getClass(month.halfs[0])">
-                        <a x-ng-href="#{{path}}?week={{month.halfs[0]}}">первая половина</a>
+                        <a x-ng-href="#{{path}}?phase={{month.halfs[0]}}">середина месяца</a>
                     </li>
                     <li x-ng-class="getClass(month.halfs[1])" x-ng-show="month.halfs.length>1">
-                        <a x-ng-href="#{{path}}?week={{month.halfs[1]}}">вторая половина</a>
+                        <a x-ng-href="#{{path}}?phase={{month.halfs[1]}}">конец месяца</a>
                     </li>
                 </ul>
             </li>

@@ -93,6 +93,8 @@
             $scope.saveProcess = true;
             $scope.currentISOGD.CreateDate = new Date();
             $scope.edit = false;
+          
+			$scope.currentISOGD.VolumeMeans = $scope.currentISOGD.VolumeMeans.toString().replace(',', '.');
             promise = $http.post('js/gc.isogd/isogd.fn.isogdSaveUpdate.php', $scope.currentISOGD);
             promise.success(function (data) {
                 dProcess.close();
@@ -217,7 +219,8 @@
                 });
             }
         };
-
+		
+	
         $scope.getFiles();
 
 //        $scope.deleteFile = function (file) {
@@ -253,7 +256,6 @@
             });
             promise.error(function (data) {
                 console.log(data);
-                $scope.getColorArea();
             });
         };
 

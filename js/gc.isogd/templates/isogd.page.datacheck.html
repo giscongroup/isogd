@@ -61,6 +61,7 @@
         <tr x-ng-repeat="record in isogd.isogdWeek">
             <td>{{$index+1}}</td>
             <td>{{record.data}}</td>
+            <!--<td>{{record.phase}}</td>-->
             <td>{{record.VolumeMeans}}</td>
             <td>{{record.QuantityFactsGrantingData1}}</td>
             <td>{{record.QuantityFactsGrantingData2}}</td>
@@ -70,7 +71,7 @@
             <td>{{record.unpaidRequests}}</td>
             <td>
                 <ul class="actions" x-ng-hide="$index == 0 && activeTab == currentYear">
-                    <li><i class="icon-pencil" x-ng-click="openDialog(record.week)"></i></li>
+                    <li><i class="icon-pencil" x-ng-click="openDialog(record.phase)"></i></li>
                 </ul>
             </td>
         </tr>

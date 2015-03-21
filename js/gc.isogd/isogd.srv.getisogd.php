@@ -15,9 +15,9 @@ if (isset($_SESSION['session_id'])) {
     $today = date("Y-m-d");
     $startYear = date("Y") . "-01-00";
 
-    $year = date("Y");
-    $month = date("m");
-    $day = date("d") + 1;
+    $year += date("Y");
+    $month += date("m");
+    $day += date("d") + 1;
 
     $lastmonth = $month - 1;
 
@@ -31,11 +31,9 @@ if (isset($_SESSION['session_id'])) {
         $lastmonth = '0' . $lastmonth;
 
     if ($day <= 15) {
-        $startMonth = date("Y-m") . "-01";
-
+        $startMonth = date("Y-m") . "-00";
         $startMonthPY = ($year - 1) . "-" . $lastmonth . "-16";
         $endMonthPY = ($year - 1) . "-" . $lastmonth . "-32";
-
     } else {
         $startMonth = date("Y-m") . "-16";
         $startMonthPY = ($year - 1) . "-" . $lastmonth . "-00";
@@ -43,6 +41,7 @@ if (isset($_SESSION['session_id'])) {
     }
 
     $today = $year . '-' . $month . '-' . $day;
+    
 
     if ($_SESSION['session_adm'] == 1) {
 

@@ -15,7 +15,7 @@
         gp = _win.geoportalInstance;
 
 
-    gp.controller('isogd.page.datacheck', [ '$scope', '$isogdData', '$dialog', '$http', '$pathParams', function ($scope, $isogdData, $dialog, $http, $pathParams) {
+    gp.controller('isogd.page.datacheck', ['$scope', '$isogdData', '$dialog', '$http', '$pathParams', function ($scope, $isogdData, $dialog, $http, $pathParams) {
         var dProcess = $dialog.dialog({
                 backdrop: true,
                 keyboard: true,
@@ -77,19 +77,33 @@
         $scope.$watch('isogdweek', function (val) {
 
             $scope.isogd.isogdWeek = $scope.isogdweek.slice();
-            var monthArray = ['янв', 'февр', 'марта', 'апр', 'мая', 'июня',
-                'июля', 'авг', 'сент', 'окт', 'ноября', 'дек'];
+            var phaseArray = [
+                'середина января', 'конец января',
+                'середина февраля', 'конец февраля',
+                'середина марта', 'конец марта',
+                'середина апреля', 'конец апреля',
+                'середина мая', 'конец мая',
+                'середина июня', 'конец июня',
+                'середина июля', 'конец июля',
+                'середина августа', 'конец августа',
+                'середина сентября', 'конец сентября',
+                'середина октября', 'конец октября',
+                'середина ноября', 'конец ноября',
+                'середина декабря', 'конец декабря'];
+            //var monthArray = ['янв', 'февр', 'марта', 'апр', 'мая', 'июня',
+            //    'июля', 'авг', 'сент', 'окт', 'ноября', 'дек'];
 
             _.each($scope.isogd.isogdWeek, function (isogd) {
-                var week = isogd.week.split('-');
-                isogd.data = week[2] + ' ' + monthArray[week[1] - 1];
+                //var week = isogd.week.split('-');
+                //isogd.data = week[2] + ' ' + monthArray[week[1] - 1];
+                isogd.data = phaseArray[isogd.phase - 1];
             });
 
             $scope.isogd.isogdWeek.reverse();
         });
 
 
-        $scope.openDialog = function (week) {
+        $scope.openDialog = function (phase) {
             $scope.saveSuccess = false;
             $scope.saveError = false;
             var d = $dialog.dialog({
@@ -105,24 +119,14 @@
                 }
             });
 
-            if (week !== undefined && week !== '') {
-                var data = week.split('-')[2],
-                    month = week.split('-')[1],
-                    monthArray = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
-                        'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-                if (data <= 15)
-                    data = '14 ';
-                else
-                    data = '28 ';
-
-                $pathParams.week = data + monthArray[month - 1];
-            }
+            $pathParams.phase = phase;
 
             d.open().then(function (result) {
 
                 if (result !== undefined) {
                     dProcess.open();
                     result.CreateDate = new Date();
+                    result.VolumeMeans = result.VolumeMeans.replace(',', '.');
 
 
                     promise = $http.post('js/gc.isogd/isogd.fn.saveweek.php', result);
@@ -141,8 +145,6 @@
                 }
             });
         };
-
-
 
         $scope.getISOGDdata = function () {
             promise = $http.get('js/gc.isogd/isogd.srv.getisogd.php');

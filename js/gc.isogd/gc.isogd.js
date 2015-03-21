@@ -58,8 +58,8 @@
 
 
 //    baseMods.push('wml.touch');
-//    baseMods.push('eventModule');
-//    baseMods.push('wml.chain');
+    baseMods.push('eventModule');
+    baseMods.push('wml.chain');
     baseMods.push('ui.bootstrap');
     baseMods.push('ngRoute');
     baseMods.push('ngAnimate');
@@ -225,7 +225,7 @@
             link: function (scope, element, attrs) {
 
                 if (attrs.ngHref !== undefined) {
-                    if (attrs.ngHref.split('=')[1].split(' ')[1] == $pathParams.week.split(' ')[1]) {
+                    if (attrs.ngHref.split('=')[1] == $pathParams.phase || attrs.ngHref.split('=')[1] == $pathParams.phase - 1) {
                         if (element.parent().attr("class").indexOf('active') <= 0) {
                             element.parent().addClass('active');
                             scope.lastEl = element;
@@ -260,8 +260,7 @@
     }]);
 
 
-    gp.controller('isogd.page.main', [ '$rootScope', '$user', '$location', '$isogdData', '$dialog', '$http', function ($rootScope, $user, $location, $isogdData, $dialog, $http) {
-
+    gp.controller('isogd.page.main', ['$rootScope', '$user', '$location', '$isogdData', '$dialog', '$http', '$window', function ($rootScope, $user, $location, $isogdData, $dialog, $http, $window) {
         $rootScope.monthArray = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
         $rootScope.location = $location;
 
@@ -334,12 +333,10 @@
 
 
         };
-
         $rootScope.MO = $isogdData.MO[0];
         $rootScope.user = $user;
         $rootScope.stat = $isogdData.stat;
         $rootScope.isogd = $isogdData.isogd;
-
 
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
             if ($user.session_id === undefined) {
@@ -351,12 +348,10 @@
                 }
             }
             else {
-
                 var path = $location.url();
                 $rootScope.botclass = '';
                 if (path === '/graph/mo/')
                     $rootScope.botclass = 'bot';
-
                 if (path === '/') {
                     if ($user.manager == 0) {
                         $location.path('/mo/main/');
@@ -367,7 +362,6 @@
                 }
             }
         });
-
         $rootScope.sessionClose = function () {
             $rootScope.botclass = 'bot';
             $user.session_id = undefined;
@@ -375,20 +369,18 @@
             $user.manager = undefined;
             $location.path('/login/');
         };
-
         $rootScope.exportMDB = function () {
-
-            var promise = $http.get('js/gc.isogd/isogd.fn.exportmdb.php');
+            var promise = $http.get('js/gc.isogd/isogd.fn.exportMDB.php');
             promise.success(function (data) {
+
+                //   $location.absUrl(data);
+                $window.open(data, '_newtab');
+
                 console.log(data);
             });
             promise.error(function (data) {
                 console.log(data);
             });
-        };
-
+        }
     }])
-
-
-})
-    (this);
+})(this);

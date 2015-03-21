@@ -48,8 +48,8 @@ if (isset($_SESSION['session_id'])) {
             $sql = "UPDATE files SET url = '" . $dirpath . "/files/" . $_SESSION['session_id'] . "/" . $newID . "_" . $name . "' WHERE Code = " . $newID . ";";
             $db->exec($sql);
 
-            if ($_SESSION['os'] === 1)
-                $name = iconv('utf-8', 'windows-1251', $name);
+           // if ($_SESSION['os'] === 1)
+            //    $name = iconv('utf-8', 'windows-1251', $name);
 
             if (!file_exists($dir)) {
                 mkdir($dir, 0777, true);

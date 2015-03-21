@@ -71,7 +71,7 @@
 
         $scope.sortisogd = _.sortBy($scope.isogdLastData, function (obj) {
             if (obj.VolumeMeans !== undefined)
-                return obj.VolumeMeans;
+                return parseFloat(obj.VolumeMeans);
             else
                 return 0;
         });
@@ -84,12 +84,9 @@
         $scope.conclusion.sumByBestMOinThisYear = 0;
         $scope.conclusion.bestMOinThisYear = [];
         for (var i = 0; i < 5; i++) {
-//            if ($scope.conclusion.bestMOinThisYear !== undefined)
-//                $scope.conclusion.bestMOinThisYear = $scope.conclusion.bestMOinThisYear + ', ' + $scope.sortisogd[i].NameMO;
-//            else
-//                $scope.conclusion.bestMOinThisYear = $scope.sortisogd[i].NameMO;
+
             $scope.conclusion.bestMOinThisYear.push($scope.sortisogd[i].NameMO);
-            $scope.conclusion.sumByBestMOinThisYear = $scope.conclusion.sumByBestMOinThisYear + $scope.sortisogd[i].VolumeMeans;
+            $scope.conclusion.sumByBestMOinThisYear = $scope.conclusion.sumByBestMOinThisYear + parseFloat($scope.sortisogd[i].VolumeMeans);
         }
 
         //////////////////////////вывод для предыдущего года ///////////////////////////////////////////
@@ -103,13 +100,13 @@
                     isogd.NameMO = el.NameMO;
 
                 if (isogd.VolumeMeans !== undefined)
-                    $scope.conclusion.sumByPreviousYear = $scope.conclusion.sumByPreviousYear + isogd.VolumeMeans;
+                    $scope.conclusion.sumByPreviousYear = $scope.conclusion.sumByPreviousYear + parseFloat(isogd.VolumeMeans);
             });
 
 
             $scope.sortisogd = _.sortBy($scope.isogdPreviousYear, function (obj) {
                 if (obj.VolumeMeans !== undefined)
-                    return obj.VolumeMeans;
+                    return parseFloat(obj.VolumeMeans);
                 else
                     return 0;
             });
@@ -118,13 +115,9 @@
             $scope.conclusion.sumByBestMOinPreviousYear = 0;
             $scope.conclusion.bestMOinPreviousYear = [];
             for (i = 0; i < 5; i++) {
-//                if ($scope.conclusion.bestMOinPreviousYear !== undefined)
-//                    $scope.conclusion.bestMOinPreviousYear = $scope.conclusion.bestMOinPreviousYear + ', ' + $scope.sortisogd[i].NameMO;
-//                else
-//                    $scope.conclusion.bestMOinPreviousYear = $scope.sortisogd[i].NameMO;
                 $scope.conclusion.bestMOinPreviousYear.push($scope.sortisogd[i].NameMO);
                 if ($scope.sortisogd[i].VolumeMeans !== undefined)
-                    $scope.conclusion.sumByBestMOinPreviousYear = $scope.conclusion.sumByBestMOinPreviousYear + $scope.sortisogd[i].VolumeMeans;
+                    $scope.conclusion.sumByBestMOinPreviousYear = $scope.conclusion.sumByBestMOinPreviousYear + parseFloat($scope.sortisogd[i].VolumeMeans);
             }
         }
         ///////////////////////вывод для аналогичного периода прошлого года /////////////////////////////////////////////////////////
@@ -138,7 +131,7 @@
                     isogd.NameMO = el.NameMO;
 
                 if (isogd.VolumeMeans !== undefined)
-                    $scope.conclusion.sumByPreviousYearSamePeriod = $scope.conclusion.sumByPreviousYearSamePeriod + isogd.VolumeMeans;
+                    $scope.conclusion.sumByPreviousYearSamePeriod = $scope.conclusion.sumByPreviousYearSamePeriod + parseFloat(isogd.VolumeMeans);
             });
 
 
@@ -157,13 +150,9 @@
                 max = $scope.sortisogd.length;
             $scope.conclusion.bestMOinPreviousYearSamePeriod = [];
             for (i = 0; i < max; i++) {
-//                if ($scope.conclusion.bestMOinPreviousYearSamePeriod !== undefined)
-//                    $scope.conclusion.bestMOinPreviousYearSamePeriod = $scope.conclusion.bestMOinPreviousYearSamePeriod + ', ' + $scope.sortisogd[i].NameMO;
-//                else
-//                    $scope.conclusion.bestMOinPreviousYearSamePeriod = $scope.sortisogd[i].NameMO;
                 $scope.conclusion.bestMOinPreviousYearSamePeriod.push($scope.sortisogd[i].NameMO);
                 if ($scope.sortisogd[i].VolumeMeans !== undefined)
-                    $scope.conclusion.sumByBestMOinPreviousYearSamePeriod = $scope.conclusion.sumByBestMOinPreviousYearSamePeriod + $scope.sortisogd[i].VolumeMeans;
+                    $scope.conclusion.sumByBestMOinPreviousYearSamePeriod = $scope.conclusion.sumByBestMOinPreviousYearSamePeriod + parseFloat($scope.sortisogd[i].VolumeMeans);
             }
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -17,43 +17,30 @@
 
     gp.controller('isogd.dialog.weekCntr', ['$scope', 'dialog', '$pathParams', '$isogdData', '$location', 'msg', function ($scope, dialog, $pathParams, $isogdData, $location, msg) {
         var today = new Date(),
-            halfCount = 2;
+            maxyeardate = $pathParams.year == today.getFullYear() ? new Date() : new Date($pathParams.year, 11, 31),
+            halfCount = 2,
+            maxmonth, date, year;
 
         $scope.path = $location.path();
-        $scope.monthArray = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
-            'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+        $scope.monthArray = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь',
+            'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
 
-        if ($pathParams.week !== undefined) {
-            var monthInd;
-            for (var i = 0; i < $scope.monthArray.length; i++) {
-                if ($scope.monthArray[i] == $pathParams.week.split(' ')[1])
-                    monthInd = i;
-            }
 
-            if (monthInd <= today.getMonth()) {
-                $scope.activeTab = $pathParams.week;
-            }
-            else {
-                $pathParams.week = '14 января';
-                $scope.activeTab = $pathParams.week;
-            }
-        }
-        else {
-            $pathParams.week = '14 января';
-            $scope.activeTab = $pathParams.week;
-        }
+        $pathParams.phase === undefined && ($pathParams.phase = '1');
+        $scope.activeTab = $pathParams.phase;
 
         if ($pathParams.year == today.getFullYear()) {
-            $scope.month = today.getMonth();
-            $scope.date = today.getDate();
-            $scope.year = today.getFullYear();
+            maxmonth = today.getMonth();
+            date = today.getDate();
+            year = today.getFullYear();
         }
         else {
-            $scope.month = 11;
-            $scope.date = 31;
-            $scope.year = $pathParams.year
+            maxmonth = 11;
+            date = 31;
+            year = $pathParams.year
         }
 
+        $scope.year = year;
 
         $scope.twoWeeks = [];
         $scope.isogd = {};
@@ -62,67 +49,43 @@
 
         $scope.isogdByWeek = {};
 
-        if ($scope.date < 16)
-            halfCount = 0;
-        else
-            halfCount = 1;
+        halfCount = date < 16 ? 0 : 1;
 
-        for (var i = 0, max = $scope.month; i <= max; i++) {
+        for (var i = 0, max = maxmonth; i <= max; i++) {
             var maxHalf = 2;
 
             if (i === max && $pathParams.year == today.getFullYear())
                 maxHalf = halfCount;
 
-            var week = {monthName: $scope.monthArray[i], halfs: []}
+            var week = {monthName: $scope.monthArray[i], halfs: []};
             for (var half = 0; half < maxHalf; half++) {
                 if (half === 0) {
                     var
                         isogd = _.find($scope.isogd.isogdWeek, function (el) {
-                            var data = new Date(el.week),
-                                startDate = new Date($scope.year, i, 0),
-                                stopDate = new Date($scope.year, i, 16);
-                            return startDate < data && data < stopDate;
+                            return parseInt(el.phase) === ((i + 1) * 2) - 1;
                         });
-                    var month = ((i + 1) < 10) ? '0' + (i + 1) : (i + 1);
-                    if (isogd !== undefined) {
-                        $scope.isogdByWeek['14 ' + $scope.monthArray[i]] = isogd;
-//                        $scope.isogdByWeek['14 ' + $scope.monthArray[i]].week = today.getFullYear() + '-' + month + '-14';
-                    }
-                    else {
-                        $scope.isogdByWeek['14 ' + $scope.monthArray[i]] = {week: $scope.year + '-' + month + '-14'};
-                    }
-
-                    week.halfs.push('14 ' + $scope.monthArray[i]);
+                    var phase = ((i + 1) * 2) - 1;
+                    $scope.isogdByWeek[phase] = isogd !== undefined ? isogd : {phase: phase};
+                    week.halfs.push(phase);
                 }
                 else {
-                    month = ((i + 1) < 10) ? '0' + (i + 1) : (i + 1);
+                    phase = (i + 1) * 2;
                     isogd = _.find($scope.isogd.isogdWeek, function (el) {
-                        var data = new Date(el.week),
-                            startDate = new Date($scope.year, i, 15),
-                            stopDate = new Date($scope.year, i, 32);
-
-                        return startDate < data && data < stopDate;
+                        return parseInt(el.phase) === (i + 1) * 2;
                     });
 
-                    if (isogd !== undefined) {
-                        $scope.isogdByWeek['28 ' + $scope.monthArray[i]] = isogd;
-//                        $scope.isogdByWeek['28 ' + $scope.monthArray[i]].week = today.getFullYear() + '-' + month + '-28';
-                    }
-                    else {
-                        $scope.isogdByWeek['28 ' + $scope.monthArray[i]] = {week: $scope.year + '-' + month + '-28'};
-                    }
-
-                    week.halfs.push('28 ' + $scope.monthArray[i]);
+                    $scope.isogdByWeek[phase] = isogd !== undefined ? isogd : {phase: phase};
+                    week.halfs.push(phase);
                 }
             }
 
-            $scope.twoWeeks.push(week);
+            week.halfs.length > 0 && $scope.twoWeeks.push(week);
         }
 
         $scope.activeWeek = $scope.isogdByWeek[$scope.activeTab];
 
         $scope.getClass = function (path) {
-            if ($pathParams.week == path) {
+            if ($pathParams.phase == path) {
                 $scope.activeTab = path;
                 $scope.activeWeek = $scope.isogdByWeek[$scope.activeTab];
 
