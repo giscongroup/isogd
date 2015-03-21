@@ -32,7 +32,7 @@
         };
     }]);
 
-    gp.controller('isogd.page.formISOGD', [ '$scope', '$http', '$user', '$isogdData', '$filter', '$dialog', '$pathParams', function ($scope, $http, $user, $isogdData, $filter, $dialog, $pathParams) {
+    gp.controller('isogd.page.formISOGD', ['$scope', '$http', '$user', '$isogdData', '$filter', '$dialog', '$pathParams', function ($scope, $http, $user, $isogdData, $filter, $dialog, $pathParams) {
         var promise,
             dProcess = $dialog.dialog({
                 backdrop: true,
@@ -44,6 +44,22 @@
 
         $scope.edit = true;
         $scope.MO = $isogdData.MO[0];
+
+        var monthArray = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+            'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+        var today = new Date(),
+            month = today.getMonth(),
+            data = today.getDate();
+        $scope.phase = data > 15 ? 'середину ' : 'конец ';
+        if (data > 15) {
+            $scope.phase += monthArray[month];
+        }
+        else if (month === 0) {
+            $scope.phase += 'декабря';
+        }
+        else {
+            $scope.phase += monthArray[month - 1];
+        }
 
         $scope.saveSuccess = false;
         $scope.saveError = false;
@@ -88,13 +104,24 @@
 
         $scope.savedata = function () {
             $scope.openDialogProcess();
+            var today = new Date(),
+                month = today.getMonth(),
+                data = today.getDate();
+
             $scope.saveSuccess = false;
             $scope.saveError = false;
             $scope.saveProcess = true;
-            $scope.currentISOGD.CreateDate = new Date();
+            $scope.currentISOGD.CreateDate = today;
             $scope.edit = false;
-          
-			$scope.currentISOGD.VolumeMeans = $scope.currentISOGD.VolumeMeans.toString().replace(',', '.');
+
+            $scope.currentISOGD.VolumeMeans = $scope.currentISOGD.VolumeMeans.toString().replace(',', '.');
+
+            $scope.currentISOGD.phase = (month + 1) * 2;
+            data < 16 && ($scope.currentISOGD.phase += -1);
+            $scope.currentISOGD.phase += -1;
+            $scope.currentISOGD.phase === 0 && ($scope.currentISOGD.phase = 24);
+            $scope.currentISOGD.phase = month === 0 && data < 16 ? (today.getFullYear() - 1).toString() + '-'.toString() + $scope.currentISOGD.phase.toString() : today.getFullYear().toString() + '-'.toString() + $scope.currentISOGD.phase.toString();
+
             promise = $http.post('js/gc.isogd/isogd.fn.isogdSaveUpdate.php', $scope.currentISOGD);
             promise.success(function (data) {
                 dProcess.close();
@@ -161,7 +188,13 @@
                     formData.append('file_' + i, $scope.filesToUpload[i]);
                 }
 
-                promise = $http({method: 'POST', url: 'js/gc.isogd/isogd.fn.savefile.php?filename=' + $scope.currentISOGD.NameDocumentPayment, data: formData, headers: {'Content-Type': undefined}, transformRequest: angular.identity});
+                promise = $http({
+                    method: 'POST',
+                    url: 'js/gc.isogd/isogd.fn.savefile.php?filename=' + $scope.currentISOGD.NameDocumentPayment,
+                    data: formData,
+                    headers: {'Content-Type': undefined},
+                    transformRequest: angular.identity
+                });
                 promise.success(function (data) {
 
                     if (typeof data !== 'string') {
@@ -175,7 +208,11 @@
                     $scope.filesupload = true;
                     dProcess.close();
 
-                    promise = $http({method: 'GET', url: 'js/gc.isogd/isogd.srv.getfiles.php', params: { fileID: $scope.currentISOGD.ExistenceDocumentPayment}});
+                    promise = $http({
+                        method: 'GET',
+                        url: 'js/gc.isogd/isogd.srv.getfiles.php',
+                        params: {fileID: $scope.currentISOGD.ExistenceDocumentPayment}
+                    });
                     promise.success(function (data) {
                         $scope.MO.files = data;
                     });
@@ -210,7 +247,11 @@
 
         $scope.getFiles = function () {
             if ($scope.MO.files === undefined) {
-                promise = $http({method: 'GET', url: 'js/gc.isogd/isogd.srv.getfiles.php', params: { fileID: $scope.currentISOGD.ExistenceDocumentPayment}});
+                promise = $http({
+                    method: 'GET',
+                    url: 'js/gc.isogd/isogd.srv.getfiles.php',
+                    params: {fileID: $scope.currentISOGD.ExistenceDocumentPayment}
+                });
                 promise.success(function (data) {
                     $scope.MO.files = data;
                 });
@@ -219,8 +260,8 @@
                 });
             }
         };
-		
-	
+
+
         $scope.getFiles();
 
 //        $scope.deleteFile = function (file) {

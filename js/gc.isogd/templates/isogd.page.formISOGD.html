@@ -1,342 +1,345 @@
 <h3>Формы ИСОГД</h3>
+<label style="color: red">Данные вносятся по состоянию на <span>{{phase}}</span></label>
 <form name="form" x-ng-submit="savedata()" x-ng-switch on="activeTab" class="animate-switch-containerISOGD">
-<ul class="nav nav-tabs">
-    <li x-ng-class="getClass('maininfo')">
-        <a href="#/mo/form/isogd/?tabisogd=maininfo">Общая информация <span x-ng-show="showMessage('maininfo')"
-                                                                            class="label label-warning">!</span>
-        </a>
-    </li>
-    <li x-ng-class="getClass('document')"><a href="#/mo/form/isogd/?tabisogd=document">Правоустанавливающий документ
+    <ul class="nav nav-tabs">
+        <li x-ng-class="getClass('maininfo')">
+            <a href="#/mo/form/isogd/?tabisogd=maininfo">Общая информация <span x-ng-show="showMessage('maininfo')"
+                                                                                class="label label-warning">!</span>
+            </a>
+        </li>
+        <li x-ng-class="getClass('document')"><a href="#/mo/form/isogd/?tabisogd=document">Правоустанавливающий документ
         <span x-ng-show="showMessage('document')"
               class="label label-warning">!</span>
-    </a>
-    </li>
-    <li x-ng-class="getClass('data')"><a href="#/mo/form/isogd/?tabisogd=data">Показатели деятельности
+        </a>
+        </li>
+        <li x-ng-class="getClass('data')"><a href="#/mo/form/isogd/?tabisogd=data">Показатели деятельности
         <span x-ng-show="showMessage('data')"
               class="label label-important">!</span>
-    </a>
-    </li>
-    <li x-ng-class="getClass('option')"><a href="#/mo/form/isogd/?tabisogd=option">Доп. информация
+        </a>
+        </li>
+        <li x-ng-class="getClass('option')"><a href="#/mo/form/isogd/?tabisogd=option">Доп. информация
         <span x-ng-show="showMessage('option')"
               class="label label-warning">!</span>
-    </a>
-    </li>
-</ul>
+        </a>
+        </li>
+    </ul>
 
 
-<div x-ng-switch-when="maininfo" class="formC">
+    <div x-ng-switch-when="maininfo" class="formC">
 
-    <div class="field-box">
-        <label>Наименование структурного подразделения<span>ответственного за ведение ИСОГД</span></label>
+        <div class="field-box">
+            <label>Наименование структурного подразделения<span>ответственного за ведение ИСОГД</span></label>
 
-        <div>
-            <input x-ng-model="currentISOGD.NameOfStructural" type="text">
+            <div>
+                <input x-ng-model="currentISOGD.NameOfStructural" type="text">
+            </div>
         </div>
-    </div>
-    <div class="field-box">
-        <label>Количество сотрудников ИСОГД<span>(муниципальные служащие)</span></label>
+        <div class="field-box">
+            <label>Количество сотрудников ИСОГД<span>(муниципальные служащие)</span></label>
 
-        <div>
-            <input name="NumberOfEmployees" x-ng-model="currentISOGD.NumberOfEmployees" type="text"
-                   placeholder="Введите числовое значение"
-                   x-ng-Pattern="/^[0-9]*$/">
-            <!--<span>чел.</span>-->
+            <div>
+                <input name="NumberOfEmployees" x-ng-model="currentISOGD.NumberOfEmployees" type="text"
+                       placeholder="Введите числовое значение"
+                       x-ng-Pattern="/^[0-9]*$/">
+                <!--<span>чел.</span>-->
              <span class="label1 label-important"
                    x-ng-hide="form.NumberOfEmployees.$valid"><i class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
         </div>
+        <div class="field-box">
+            <label>Количество сотрудников ИСОГД <span>(не муниципальные служащие)</span></label>
 
-    </div>
-    <div class="field-box">
-        <label>Количество сотрудников ИСОГД <span>(не муниципальные служащие)</span></label>
-
-        <div>
-            <input name="NumberOfEmployees2" x-ng-model="currentISOGD.NumberOfEmployees2" type="text"
-                   placeholder="Введите числовое значение"
-                   x-ng-Pattern="/^[0-9]*$/">
-            <!--<span>чел.</span>-->
+            <div>
+                <input name="NumberOfEmployees2" x-ng-model="currentISOGD.NumberOfEmployees2" type="text"
+                       placeholder="Введите числовое значение"
+                       x-ng-Pattern="/^[0-9]*$/">
+                <!--<span>чел.</span>-->
              <span class="label1 label-important"
                    x-ng-hide="form.NumberOfEmployees2.$valid"><i class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
         </div>
+        <div class="field-box">
+            <label>Финансирование ИСОГД на текущий год<span>в соответствии с бюджетом МО, тыс. руб.</span></label>
 
-    </div>
-    <div class="field-box">
-        <label>Финансирование ИСОГД на текущий год<span>в соответствии с бюджетом МО, тыс. руб.</span></label>
-
-        <div>
-            <input name="FinancingCurrentYear" x-ng-model="currentISOGD.FinancingCurrentYear" type="text"
-                   x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
-            <!--<span>тыс. руб.</span>-->
+            <div>
+                <input name="FinancingCurrentYear" x-ng-model="currentISOGD.FinancingCurrentYear" type="text"
+                       x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
+                <!--<span>тыс. руб.</span>-->
                      <span class="label1 label-important"
                            x-ng-hide="form.FinancingCurrentYear.$valid"><i class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
         </div>
+        <div class="field-box">
+            <label>Фактическое финансирование ИСОГД<span>в текущем году, тыс. руб.</span></label>
 
-    </div>
-    <div class="field-box">
-        <label>Фактическое финансирование ИСОГД<span>в текущем году, тыс. руб.</span></label>
-
-        <div>
-            <input name="ActualFinancingCurrentYear" x-ng-model="currentISOGD.ActualFinancingCurrentYear"
-                   type="text"
-                   x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
-            <!--<span>тыс. руб.</span>-->
+            <div>
+                <input name="ActualFinancingCurrentYear" x-ng-model="currentISOGD.ActualFinancingCurrentYear"
+                       type="text"
+                       x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
+                <!--<span>тыс. руб.</span>-->
                   <span class="label1 label-important"
                         x-ng-hide="form.ActualFinancingCurrentYear.$valid"><i class="icon-remove-sign"></i> Введите числовое значение</span>
-        </div>
+            </div>
 
-    </div>
-</div>
-
-<div x-ng-switch-when="document" class="docs clearfix">
-    <div class="infB">
-        <input type="file" name="file" multiple
-               onchange="angular.element(this).scope().setFiles(this)">
-
-
-        <h4>Список файлов</h4>
-
-        <div class="alert alert-warning" x-ng-show="MO.files.length == 0 || MO.files == undefined"><i
-                class="icon-warning-sign"></i> Файлы
-            отсутствуют
-        </div>
-
-
-        <table class="table mail docs table-hover table-striped">
-
-            <tbody>
-            <tr x-ng-repeat="file in MO.files">
-                <td>
-                    <i class="icon-file-alt"></i>
-
-                </td>
-                <td>{{file.createDate | date:'dd.MM.yy'}}</td>
-                <td style="font-style: italic"><a x-ng-href="{{file.url}}" target="_blank">{{file.filename}}</a></td>
-
-                <td>
-                    <ul class="actions">
-                        <li>
-                            <a x-ng-href="{{file.url}}" target="_blank">
-                                <i class="icon-download-alt"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-
-            </tbody>
-        </table>
-
-        <div
-                x-ng-show="filesuploaderror"
-                class="alert alert-error woutm">
-            <i class="icon-remove-sign"></i> Ошибка при загрузке файлов
         </div>
     </div>
-    <div class="infB">
-        <table class="table table-hover table-striped">
-            <thead class="col"></thead>
-            <tbody>
 
-            <tr>
-                <td>Наименование документа, устанавливающего плату за предоставление сведений ИСОГД</td>
-                <td>{{currentISOGD.NameDocumentPayment}}</td>
-            </tr>
-            <tr>
-                <td>Номер документа, устанавливающего плату за предоставление сведений ИСОГД</td>
-                <td>{{currentISOGD.NumberDocumentPayment}}</td>
-            </tr>
-            <tr>
-                <td>Дата документа, устанавливающего плату за предоставление сведений ИСОГД</td>
-                <td>{{currentISOGD.DateDocumentPayment}}</td>
-            </tr>
-            <tr>
-                <td>Размер платы за предоставление сведений, содержащихся в одном разделе ИСОГД (физ. лицо)</td>
-                <td>{{currentISOGD.SizePayment1}}</td>
-            </tr>
-            <tr>
-                <td>Размер платы за предоставление сведений, содержащихся в одном разделе ИСОГД (юр. лицо)</td>
-                <td>{{currentISOGD.SizePayment2}}</td>
-            </tr>
-            <tr>
-                <td>Размер платы за предоставление копии одного документа, содержащегося в ИСОГД (физ. лицо)</td>
-                <td>{{currentISOGD.SizePayment3}}</td>
-            </tr>
-            <tr>
-                <td>Размер платы за предоставление копии одного документа, содержащегося в ИСОГД (юр. лицо)</td>
-                <td>{{currentISOGD.SizePayment4}}</td>
-            </tr>
-            </tbody>
-        </table>
+    <div x-ng-switch-when="document" class="docs clearfix">
+        <div class="infB">
+            <input type="file" name="file" multiple
+                   onchange="angular.element(this).scope().setFiles(this)">
+
+
+            <h4>Список файлов</h4>
+
+            <div class="alert alert-warning" x-ng-show="MO.files.length == 0 || MO.files == undefined"><i
+                    class="icon-warning-sign"></i> Файлы
+                отсутствуют
+            </div>
+
+
+            <table class="table mail docs table-hover table-striped">
+
+                <tbody>
+                <tr x-ng-repeat="file in MO.files">
+                    <td>
+                        <i class="icon-file-alt"></i>
+
+                    </td>
+                    <td>{{file.createDate | date:'dd.MM.yy'}}</td>
+                    <td style="font-style: italic"><a x-ng-href="{{file.url}}" target="_blank">{{file.filename}}</a>
+                    </td>
+
+                    <td>
+                        <ul class="actions">
+                            <li>
+                                <a x-ng-href="{{file.url}}" target="_blank">
+                                    <i class="icon-download-alt"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <div
+                    x-ng-show="filesuploaderror"
+                    class="alert alert-error woutm">
+                <i class="icon-remove-sign"></i> Ошибка при загрузке файлов
+            </div>
+        </div>
+        <div class="infB">
+            <table class="table table-hover table-striped">
+                <thead class="col"></thead>
+                <tbody>
+
+                <tr>
+                    <td>Наименование документа, устанавливающего плату за предоставление сведений ИСОГД</td>
+                    <td>{{currentISOGD.NameDocumentPayment}}</td>
+                </tr>
+                <tr>
+                    <td>Номер документа, устанавливающего плату за предоставление сведений ИСОГД</td>
+                    <td>{{currentISOGD.NumberDocumentPayment}}</td>
+                </tr>
+                <tr>
+                    <td>Дата документа, устанавливающего плату за предоставление сведений ИСОГД</td>
+                    <td>{{currentISOGD.DateDocumentPayment}}</td>
+                </tr>
+                <tr>
+                    <td>Размер платы за предоставление сведений, содержащихся в одном разделе ИСОГД (физ. лицо)</td>
+                    <td>{{currentISOGD.SizePayment1}}</td>
+                </tr>
+                <tr>
+                    <td>Размер платы за предоставление сведений, содержащихся в одном разделе ИСОГД (юр. лицо)</td>
+                    <td>{{currentISOGD.SizePayment2}}</td>
+                </tr>
+                <tr>
+                    <td>Размер платы за предоставление копии одного документа, содержащегося в ИСОГД (физ. лицо)</td>
+                    <td>{{currentISOGD.SizePayment3}}</td>
+                </tr>
+                <tr>
+                    <td>Размер платы за предоставление копии одного документа, содержащегося в ИСОГД (юр. лицо)</td>
+                    <td>{{currentISOGD.SizePayment4}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
     </div>
 
-
-</div>
-
-<div x-ng-switch-when="data" class="long">
+    <div x-ng-switch-when="data" class="long">
 
 
-    <div class="field-box">
-        <label>Количество фактов предоставления сведений<span>содержащихся в одном разделе ИСОГД (без взимания
+        <div class="field-box">
+            <label>Количество фактов предоставления сведений<span>содержащихся в одном разделе ИСОГД (без взимания
             платы)</span>
-        </label>
+            </label>
 
-        <div>
-            <input required name="QuantityFactsGrantingData1" x-ng-model="currentISOGD.QuantityFactsGrantingData1"
-                   type="text" x-ng-Pattern="/^[0-9]*$/">
+            <div>
+                <input required name="QuantityFactsGrantingData1" x-ng-model="currentISOGD.QuantityFactsGrantingData1"
+                       type="text" x-ng-Pattern="/^[0-9]*$/">
             <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData1.$error.required"><i
                     class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
             <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData1.$error.pattern"><i
                     class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+
         </div>
+        <div class="field-box">
+            <label>Количество фактов предоставления
+                сведений<span>содержащихся в одном разделе ИСОГД (с взиманием платы)</span>
+            </label>
 
-
-    </div>
-    <div class="field-box">
-        <label>Количество фактов предоставления
-            сведений<span>содержащихся в одном разделе ИСОГД (с взиманием платы)</span>
-        </label>
-
-        <div>
-            <input required name="QuantityFactsGrantingData2" x-ng-model="currentISOGD.QuantityFactsGrantingData2"
-                   type="text" x-ng-Pattern="/^[0-9]*$/">
+            <div>
+                <input required name="QuantityFactsGrantingData2" x-ng-model="currentISOGD.QuantityFactsGrantingData2"
+                       type="text" x-ng-Pattern="/^[0-9]*$/">
             <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData2.$error.required"><i
                     class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
             <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData2.$error.pattern"><i
                     class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
         </div>
-
-    </div>
-    <div class="field-box">
-        <label>Количество фактов предоставления копии одного документа<span>содержащегося в ИСОГД (без взимания
+        <div class="field-box">
+            <label>Количество фактов предоставления копии одного документа<span>содержащегося в ИСОГД (без взимания
             платы)</span>
-        </label>
+            </label>
 
-        <div>
-            <input required name="QuantityFactsGrantingData3" x-ng-model="currentISOGD.QuantityFactsGrantingData3"
-                   type="text" x-ng-Pattern="/^[0-9]*$/">
+            <div>
+                <input required name="QuantityFactsGrantingData3" x-ng-model="currentISOGD.QuantityFactsGrantingData3"
+                       type="text" x-ng-Pattern="/^[0-9]*$/">
             <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData3.$error.required"><i
                     class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
             <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData3.$error.pattern"><i
                     class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
         </div>
-
-    </div>
-    <div class="field-box">
-        <label>Количество фактов предоставления копии одного документа<span>содержащегося в ИСОГД (с взиманием
+        <div class="field-box">
+            <label>Количество фактов предоставления копии одного документа<span>содержащегося в ИСОГД (с взиманием
             платы)</span>
-        </label>
+            </label>
 
-        <div>
-            <input required name="QuantityFactsGrantingData4" x-ng-model="currentISOGD.QuantityFactsGrantingData4"
-                   type="text" x-ng-Pattern="/^[0-9]*$/">
+            <div>
+                <input required name="QuantityFactsGrantingData4" x-ng-model="currentISOGD.QuantityFactsGrantingData4"
+                       type="text" x-ng-Pattern="/^[0-9]*$/">
             <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData4.$error.required"><i
                     class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
             <span class="label1 label-important" x-ng-show="form.QuantityFactsGrantingData4.$error.pattern"><i
                     class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
         </div>
-
-    </div>
-    <div class="field-box">
-        <label>Объем средств, полученных бюджетом муниципального образования<span>за предоставление сведений ИСОГД в
+        <div class="field-box">
+            <label>Объем средств, полученных бюджетом муниципального образования<span>за предоставление сведений ИСОГД в
             текущем году, тыс. руб.</span>
-        </label>
+            </label>
 
-        <div>
-            <input required name="VolumeMeans" x-ng-model="currentISOGD.VolumeMeans" type="text"
-                   x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
+            <div>
+                <input required name="VolumeMeans" x-ng-model="currentISOGD.VolumeMeans" type="text"
+                       x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
             <span class="label1 label-important" x-ng-show="form.VolumeMeans.$error.required"><i
                     class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
             <span class="label1 label-important"
                   x-ng-show="form.VolumeMeans.$error.pattern"><i class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+
         </div>
 
+        <div class="field-box">
+            <label>Количество фактов отказа</span>
+            </label>
 
-    </div>
-
-    <div class="field-box">
-        <label>Количество фактов отказа</span>
-        </label>
-
-        <div>
-            <input required name="denials" x-ng-model="currentISOGD.denials" type="text"
-                   x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
+            <div>
+                <input required name="denials" x-ng-model="currentISOGD.denials" type="text"
+                       x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
             <span class="label1 label-important" x-ng-show="form.denials.$error.required"><i
                     class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
             <span class="label1 label-important"
-                  x-ng-show="form.denials.$error.pattern"><i class="icon-remove-sign"></i> Введите числовое значение</span>
+                  x-ng-show="form.denials.$error.pattern"><i
+                    class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+
         </div>
 
+        <div class="field-box">
+            <label>Неоплаченные заявки</span>
+            </label>
 
-    </div>
-
-    <div class="field-box">
-        <label>Неоплаченные заявки</span>
-        </label>
-
-        <div>
-            <input required name="unpaidRequests" x-ng-model="currentISOGD.unpaidRequests" type="text"
-                   x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
+            <div>
+                <input required name="unpaidRequests" x-ng-model="currentISOGD.unpaidRequests" type="text"
+                       x-ng-Pattern="/^-?(?:\d+|\d*[\.\,]\d+)$/">
             <span class="label1 label-important" x-ng-show="form.unpaidRequests.$error.required"><i
                     class="icon-remove-sign"></i> Обязательное для заполнения поле</span>
             <span class="label1 label-important"
                   x-ng-show="form.unpaidRequests.$error.pattern"><i class="icon-remove-sign"></i> Введите числовое значение</span>
+            </div>
+
+
         </div>
-
-
     </div>
-</div>
 
-<div x-ng-switch-when="option" class="long2">
+    <div x-ng-switch-when="option" class="long2">
 
 
-    <div class="field-box">
-        <label>Наименование программного продукта<span>используемого для ведения ИСОГД (только ГИС-программы)</span>
-        </label>
+        <div class="field-box">
+            <label>Наименование программного продукта<span>используемого для ведения ИСОГД (только ГИС-программы)</span>
+            </label>
 
-        <div>
-            <input x-ng-model="currentISOGD.NameSoftwareProduct" type="text"></div>
-    </div>
-    <div class="field-box">
-        <label>Исполнитель, ответственный за ведение ИСОГД<span>(Фамилия Имя Отчество)</span></label>
-
-        <div><input x-ng-model="currentISOGD.Executor" type="text" placeholder="Фамилия Имя Отчество"></div>
-    </div>
-    <div class="field-box">
-        <label>Рабочий телефон исполнителя<span>ответственного за ведение ИСОГД</span></label>
-
-        <div><input x-ng-model="currentISOGD.Telefone1" type="text" ui-mask="9(999)999-99-99"></div>
-    </div>
-    <div class="field-box">
-        <label>Мобильный телефон исполнителя<span>ответственного за ведение ИСОГД</span></label>
-
-        <div><input x-ng-model="currentISOGD.Telefone2" type="text" ui-mask="9(999)999-99-99"></div>
-    </div>
-    <div class="field-box">
-        <label>Адрес электронной почты исполнителя<span>ответственного за ведение ИСОГД</span></label>
-
-        <div><input name="email" x-ng-model="currentISOGD.email" type="text" placeholder="example@mail.com"
-                    x-ng-Pattern="/(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})/">
-            <span class="label1 label-important" x-ng-hide="form.email.$valid"><i class="icon-remove-sign"></i> Неправильный формат адреса</span>
+            <div>
+                <input x-ng-model="currentISOGD.NameSoftwareProduct" type="text"></div>
         </div>
+        <div class="field-box">
+            <label>Исполнитель, ответственный за ведение ИСОГД<span>(Фамилия Имя Отчество)</span></label>
 
+            <div><input x-ng-model="currentISOGD.Executor" type="text" placeholder="Фамилия Имя Отчество"></div>
+        </div>
+        <div class="field-box">
+            <label>Рабочий телефон исполнителя<span>ответственного за ведение ИСОГД</span></label>
+
+            <div><input x-ng-model="currentISOGD.Telefone1" type="text" ui-mask="9(999)999-99-99"></div>
+        </div>
+        <div class="field-box">
+            <label>Мобильный телефон исполнителя<span>ответственного за ведение ИСОГД</span></label>
+
+            <div><input x-ng-model="currentISOGD.Telefone2" type="text" ui-mask="9(999)999-99-99"></div>
+        </div>
+        <div class="field-box">
+            <label>Адрес электронной почты исполнителя<span>ответственного за ведение ИСОГД</span></label>
+
+            <div><input name="email" x-ng-model="currentISOGD.email" type="text" placeholder="example@mail.com"
+                        x-ng-Pattern="/(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})/">
+                <span class="label1 label-important" x-ng-hide="form.email.$valid"><i class="icon-remove-sign"></i> Неправильный формат адреса</span>
+            </div>
+
+        </div>
     </div>
-</div>
 
 
-<input class="btn-flat vert" type="submit" value="Сохранить" x-ng-disabled="form.$invalid" x-ng-hide="saveProcess">
+    <input class="btn-flat vert" type="submit" value="Сохранить" x-ng-disabled="form.$invalid" x-ng-hide="saveProcess">
 
-<div x-ng-show="saveSuccess" class="alert alert-success woutm">
-    <i class="icon-ok-sign"></i> Данные успешно сохранены
-</div>
-<div x-ng-show="saveError" class="alert alert-error woutm">
-    <i class="icon-remove-sign"></i> Ошибка! Данные не сохранены
-</div>
+    <div x-ng-show="saveSuccess" class="alert alert-success woutm">
+        <i class="icon-ok-sign"></i> Данные успешно сохранены
+    </div>
+    <div x-ng-show="saveError" class="alert alert-error woutm">
+        <i class="icon-remove-sign"></i> Ошибка! Данные не сохранены
+    </div>
 
-<div x-ng-show="showMessage('allInf')" class="alert alert-warning woutm">
-    <i class="icon-warning-sign"></i> Информация внесена не полностью!
-</div>
+    <div x-ng-show="showMessage('allInf')" class="alert alert-warning woutm">
+        <i class="icon-warning-sign"></i> Информация внесена не полностью!
+    </div>
 
-<div x-ng-show="showMessage('data')" class="alert alert-error woutm">
-    <i class="icon-remove-sign"></i> Не заполнены обязательные поля!
-</div>
+    <div x-ng-show="showMessage('data')" class="alert alert-error woutm">
+        <i class="icon-remove-sign"></i> Не заполнены обязательные поля!
+    </div>
 
 </form>

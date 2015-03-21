@@ -22,15 +22,7 @@ if (isset($_SESSION['session_id'])) {
 
         $currentDate = date("Y-m-d");
 
-        if (date("d") <= 15) {
-            $fromDate = date("Y-m") . "-00";
-            $toDate = date("Y-m") . "-15";
-        } else {
-            $fromDate = date("Y-m") . "-16";
-            $toDate = date("Y-m") . "-32";
-        }
-
-        //////вставляем запись в лог///////////////////////////////////////
+        /////вставляем запись в лог///////////////////////////////////////
         $cur = $db->query("DESCRIBE isogdarch");
 
         foreach ($cur as $r) {
@@ -80,6 +72,7 @@ if (isset($_SESSION['session_id'])) {
                     }
                 }
             }
+
             $sql = "UPDATE isogd SET " . $fields . " WHERE ID =" . $post_data['ID'] . ";";
 
             $db->exec($sql);
@@ -113,7 +106,7 @@ if (isset($_SESSION['session_id'])) {
             $db->exec($sql);
         }
 
-        //////////////проверяем, есть ли записи для текущей недели //////////////////////////
+        //////////////проверяем, есть ли записи для текущей недели для каждого мо //////////////////////////
 
         $cur = $db->query("SELECT * FROM isogd;", PDO::FETCH_ASSOC);
         $row = $cur->fetch();
@@ -122,14 +115,14 @@ if (isset($_SESSION['session_id'])) {
             $values = "";
             $isogdMonthFields = $db->query("DESCRIBE isogdweek");
 
-            $monthExist = $db->query("SELECT * FROM isogdweek WHERE week BETWEEN '" . $fromDate . "' and '" . $toDate . "' and ID = " . $row['ID'] . ";", PDO::FETCH_ASSOC);
+            $monthExist = $db->query("SELECT * FROM isogdweek WHERE phase = '" . $post_data['phase'] . "' and ID = " . $row['ID'] . ";", PDO::FETCH_ASSOC);
             $mE = $monthExist->fetchColumn();
             if ($mE) {
 
                 $fields = "";
                 $isogdMonthFields = $db->query("DESCRIBE isogdweek");
                 foreach ($isogdMonthFields as $r) {
-                    if ($r["Field"] !== 'Code' && $r["Field"] !== 'ID' && $r["Field"] !== 'week') {
+                    if ($r["Field"] !== 'Code' && $r["Field"] !== 'ID' && $r["Field"] !== 'week' && $r["Field"] !== 'phase') {
                         if (is_null($row[$r["Field"]]) != true && $row[$r["Field"]] !== "") {
 
                             if ($fields !== "")
@@ -146,10 +139,11 @@ if (isset($_SESSION['session_id'])) {
                     }
                 }
                 $fields = $fields . $sep . " week = '" . $currentDate . "'";
+                $fields = $fields . $sep . " phase = '" . $post_data['phase'] . "'";
 
                 $sql = "UPDATE isogdweek SET " . $fields . " WHERE ID =" . $row['ID'] . " and week BETWEEN '" . $fromDate . "' and '" . $toDate . "';";
 
-               // $db->exec($sql);
+                // $db->exec($sql);
 
             } else {
                 foreach ($isogdMonthFields as $r) {
@@ -168,9 +162,10 @@ if (isset($_SESSION['session_id'])) {
                         }
                     }
                 }
-                $sql = "INSERT INTO isogdweek(" . $fields . ", week) values (" . $values . ", '" . $currentDate . "');";
+
+                $sql = "INSERT INTO isogdweek(" . $fields . ", week, phase) values (" . $values . ", '" . $currentDate . "', '" . $post_data['phase'] . "');";
             }
-            
+
             $db->exec($sql);
             // echo $sql;
 
@@ -181,6 +176,6 @@ if (isset($_SESSION['session_id'])) {
         echo 'Completed!';
     } catch (Exception $e) {
 
-        echo 'Выброшено исключение: ', $e->getMessage(), "\n",$sql;
+        echo 'Выброшено исключение: ', $e->getMessage(), "\n", $sql;
     }
 }
