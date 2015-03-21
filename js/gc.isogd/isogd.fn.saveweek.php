@@ -84,16 +84,6 @@ if (isset($_SESSION['session_id'])) {
         if (is_null($post_data['Code']) == true) {
             /////////////////////////////////////////////////////////////////////////////////////////////////
 
-            $currentWeek = explode('-', $post_data['week']);
-
-            if ($currentWeek[2] <= 15) {
-                $fromDate = $currentWeek[0] . "-" . ($currentWeek[1] - 1) . "-15";
-                $toDate = $currentWeek[0] . "-" . ($currentWeek[1] - 1) . "-32";
-            } else {
-                $fromDate = $currentWeek[0] . "-" . $currentWeek[1] . "-00";
-                $toDate = $currentWeek[0] . "-" . $currentWeek[1] . "-15";
-            }
-
             $sql = "SELECT max(week), ID FROM isogdweek WHERE week < '" . $post_data['week'] . "'  GROUP BY ID;";
             $cur = $db->query($sql);
             $moData = array();
@@ -118,7 +108,7 @@ if (isset($_SESSION['session_id'])) {
                 if ($id == $_SESSION['session_id']) {
                     $cur = $db->query("DESCRIBE isogdweek");
                     foreach ($cur as $r) {
-                        if ($r["Field"] !== 'Code' && $r["Field"] !== 'week') {
+                        if ($r["Field"] !== 'Code' && $r["Field"] !== 'week' && $r["Field"] !== 'phase') {
                             if (is_null($post_data[$r["Field"]]) != true && $post_data[$r["Field"]] !== "") {
 
                                 if ($fields !== "")
@@ -138,7 +128,7 @@ if (isset($_SESSION['session_id'])) {
                     $cur = $db->query($sql);
                     foreach ($cur as $r) {
                         foreach ($r as $nameF => $valueF) {
-                            if ($nameF !== 'Code' && gettype($nameF) == "string" && $nameF !== 'ID' && $nameF !== 'week') {
+                            if ($nameF !== 'Code' && gettype($nameF) == "string" && $nameF !== 'ID' && $nameF !== 'week' && $nameF !== 'phase') {
 
                                 if ($fields !== "")
                                     $fields = $fields . $sep . $nameF;
@@ -156,7 +146,7 @@ if (isset($_SESSION['session_id'])) {
                 }
 
 
-                $sql = "INSERT INTO isogdweek(" . $fields . ", week, ID) values (" . $values . ", '" . $post_data['week'] . "', " . $id . ");";
+                $sql = "INSERT INTO isogdweek(" . $fields . ", week, ID, phase) values (" . $values . ", '" . $post_data['week'] . "', " . $id . ", '" . $post_data['phase'] . "');";
 
                 $db->exec($sql);
             }

@@ -127,6 +127,9 @@
                     result.CreateDate = new Date();
                     result.VolumeMeans = result.VolumeMeans.replace(',', '.');
 
+                    var weeks = ['-01-14', '-01-28', '-02-14', '-02-28', '-03-14', '-03-28', '-04-14', '-04-28', '-05-14', '-05-28', '-06-14',
+                        '-06-28', '-07-14', '-07-28', '-08-14', '-08-28', '-09-14', '-09-28', '-10-14', '-10-28', '-11-14', '-11-28', '-12-14', '-12-28'];
+                    result.week = result.phase.split('-')[0] + weeks[result.phase.split('-')[1] - 1];
 
                     promise = $http.post('js/gc.isogd/isogd.fn.saveweek.php', result);
                     promise.success(function (data) {
