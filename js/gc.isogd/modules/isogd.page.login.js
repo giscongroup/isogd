@@ -19,8 +19,7 @@
         gp = _win.geoportalInstance;
 
     gp.controller('isogd.page.login', [ '$scope', '$http', '$user', '$location', '$pathToReturn', '$isogdData', function ($scope, $http, $user, $location, $pathToReturn, $isogdData) {
-        $scope.login = "Polkvoy";
-        $scope.password = "921";
+
         $scope.process = '';
 
         $scope.krasnodar_region_svg = krasnodar_region_svg;
@@ -29,19 +28,6 @@
 
         $scope.invalidAuthorization = '';
         $scope.invalidConnection = '';
-
-
-        $scope.login = "3657000W6";
-        $scope.password = "N1d4G5f5";
-//
-//        $scope.login = "3655000T3";
-//        $scope.password = "K5M0g7M3";
-//
-//        $scope.password = 'A4r2m4k8';
-//        $scope.login = "3641000P8";
-//
-//        $scope.login = "3601000X3";
-//        $scope.password = "a5i3B4Q1";
 
         $scope.getISOGDdata = function () {
             var promise = $http.get('js/gc.isogd/isogd.srv.getisogd.php');
